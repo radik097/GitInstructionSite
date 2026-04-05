@@ -14,9 +14,206 @@
     href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap"
     rel="stylesheet"
   >
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="root"></div>
-  <script type="module" src="src/main.jsx"></script>
+  <noscript>
+    <div class="noscript-banner">
+      Please enable JavaScript to use the language switcher and interactive GitHub lessons.
+      Включите JavaScript, чтобы работали переключение языка и интерактивные уроки по GitHub.
+      Povolte JavaScript, aby fungovalo prepinani jazyka a interaktivni lekce o GitHubu.
+    </div>
+  </noscript>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero__backdrop hero__backdrop--left"></div>
+      <div class="hero__backdrop hero__backdrop--right"></div>
+
+      <nav class="topbar">
+        <a class="brand" href="#top">
+          <span class="brand__mark">GH</span>
+          <span class="brand__text">GitHub Compass</span>
+        </a>
+
+        <div class="lang-switcher" aria-label="Language switcher">
+          <button class="lang-switcher__button" data-lang="ru" type="button">RU</button>
+          <button class="lang-switcher__button" data-lang="cs" type="button">CZ</button>
+          <button class="lang-switcher__button" data-lang="en" type="button">EN</button>
+          <button class="lang-switcher__button" data-lang="mock" type="button">SM</button>
+        </div>
+      </nav>
+
+      <section class="hero__content" id="top">
+        <div class="hero__copy">
+          <p class="eyebrow" data-i18n="hero.eyebrow"></p>
+          <h1 data-i18n="hero.title"></h1>
+          <p class="hero__lead" data-i18n="hero.description"></p>
+          <div class="hero__actions">
+            <a class="button button--primary" href="#glossary" data-i18n="hero.primaryAction"></a>
+            <a class="button button--ghost" href="#resources" data-i18n="hero.secondaryAction"></a>
+          </div>
+        </div>
+
+        <div class="hero__panel">
+          <div class="panel-card panel-card--terminal">
+            <div class="panel-card__header">
+              <span class="panel-card__dot"></span>
+              <span class="panel-card__dot"></span>
+              <span class="panel-card__dot"></span>
+            </div>
+            <pre class="hero-console"><code id="hero-console-code"></code></pre>
+          </div>
+          <div class="hero__stats" id="hero-stats"></div>
+        </div>
+      </section>
+    </header>
+
+    <main>
+      <section class="section section--surface" id="overview">
+        <div class="section__heading">
+          <p class="section__eyebrow" data-i18n="overview.eyebrow"></p>
+          <h2 data-i18n="overview.title"></h2>
+          <p data-i18n="overview.description"></p>
+        </div>
+        <div class="pillars" id="pillars"></div>
+      </section>
+
+      <section class="section" id="glossary">
+        <div class="section__heading">
+          <p class="section__eyebrow" data-i18n="glossary.eyebrow"></p>
+          <h2 data-i18n="glossary.title"></h2>
+          <p data-i18n="glossary.description"></p>
+        </div>
+        <div class="accordion-grid" id="glossary-accordion"></div>
+      </section>
+
+      <section class="section section--surface" id="workflow">
+        <div class="section__heading">
+          <p class="section__eyebrow" data-i18n="workflow.eyebrow"></p>
+          <h2 data-i18n="workflow.title"></h2>
+          <p data-i18n="workflow.description"></p>
+        </div>
+
+        <div class="mode-toggle" role="tablist" aria-label="Workflow mode">
+          <button class="mode-toggle__button" data-mode="gui" type="button"></button>
+          <button class="mode-toggle__button" data-mode="cli" type="button"></button>
+        </div>
+
+        <div class="workflow-grid">
+          <div class="workflow-steps">
+            <div class="workflow-steps__title-wrap">
+              <h3 id="workflow-mode-title"></h3>
+              <p id="workflow-mode-description"></p>
+            </div>
+            <div id="workflow-steps-list" class="workflow-steps__list"></div>
+            <div class="workflow-controls">
+              <p class="workflow-controls__counter" id="workflow-step-counter"></p>
+              <div class="workflow-controls__actions">
+                <button class="workflow-controls__button" id="workflow-next-step" type="button"></button>
+                <button class="workflow-controls__button workflow-controls__button--ghost" id="workflow-toggle-all" type="button"></button>
+              </div>
+            </div>
+          </div>
+          <aside class="workflow-sidebar">
+            <div class="insight-card">
+              <h3 data-i18n="workflow.sidebarTitle"></h3>
+              <ul id="workflow-reasons" class="reason-list"></ul>
+            </div>
+            <div class="insight-card">
+              <h3 data-i18n="workflow.whenTitle"></h3>
+              <p id="workflow-when-text"></p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="docs">
+        <div class="section__heading">
+          <p class="section__eyebrow" data-i18n="docs.eyebrow"></p>
+          <h2 data-i18n="docs.title"></h2>
+          <p data-i18n="docs.description"></p>
+        </div>
+
+        <div class="docs-layout">
+          <div class="docs-nav" id="docs-topic-nav"></div>
+          <article class="docs-card">
+            <div class="docs-card__header">
+              <p class="docs-card__label" data-i18n="docs.currentLabel"></p>
+              <h3 id="docs-topic-title"></h3>
+              <p id="docs-topic-summary"></p>
+            </div>
+
+            <ul class="docs-card__points" id="docs-topic-points"></ul>
+            <div class="docs-steps" id="docs-topic-steps"></div>
+
+            <div class="docs-controls">
+              <p class="docs-controls__counter" id="docs-step-counter"></p>
+              <div class="docs-controls__actions">
+                <button class="docs-controls__button" id="docs-next-step" type="button"></button>
+                <button class="docs-controls__button docs-controls__button--ghost" id="docs-toggle-all" type="button"></button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="playground">
+        <div class="section__heading">
+          <p class="section__eyebrow" data-i18n="playground.eyebrow"></p>
+          <h2 data-i18n="playground.title"></h2>
+          <p data-i18n="playground.description"></p>
+        </div>
+
+        <div class="scenario-layout">
+          <div class="scenario-selector" id="scenario-selector"></div>
+          <div class="scenario-card">
+            <div class="scenario-card__header">
+              <div>
+                <p class="scenario-card__label" data-i18n="playground.currentScenarioLabel"></p>
+                <h3 id="scenario-title"></h3>
+              </div>
+              <span class="scenario-card__badge" id="scenario-badge"></span>
+            </div>
+
+            <div class="scenario-card__body">
+              <div class="scenario-card__explanation">
+                <p id="scenario-summary"></p>
+                <ol id="scenario-points" class="scenario-points"></ol>
+              </div>
+              <div class="scenario-card__example">
+                <div class="example-switch">
+                  <button class="example-switch__button" data-mode="gui" type="button"></button>
+                  <button class="example-switch__button" data-mode="cli" type="button"></button>
+                </div>
+                <div class="example-output">
+                  <p class="example-output__title" id="scenario-example-title"></p>
+                  <pre><code id="scenario-example-code"></code></pre>
+                  <button class="copy-button" id="copy-example" type="button"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--surface" id="resources">
+        <div class="section__heading">
+          <p class="section__eyebrow" data-i18n="resources.eyebrow"></p>
+          <h2 data-i18n="resources.title"></h2>
+          <p data-i18n="resources.description"></p>
+        </div>
+        <div class="resources-grid" id="resources-grid"></div>
+        <div class="resources-controls">
+          <button class="resources-controls__button" id="resources-toggle" type="button"></button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p data-i18n="footer.note"></p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
