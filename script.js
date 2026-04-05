@@ -2,16 +2,6 @@
 
 let storedLanguage = "ru";
 
-// Fallback: if locale data was saved with broken encoding, use clean English copies.
-translations.ru = JSON.parse(JSON.stringify(translations.en));
-translations.ru.languageLabel = "Russian";
-
-translations.cs = JSON.parse(JSON.stringify(translations.en));
-translations.cs.languageLabel = "Czech";
-
-translations.mock = JSON.parse(JSON.stringify(translations.en));
-translations.mock.languageLabel = "Sarcastic";
-
 try {
   storedLanguage = localStorage.getItem("site-language") || "ru";
 } catch (error) {

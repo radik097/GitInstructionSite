@@ -447,11 +447,117 @@ function cloneLocale(source) {
 }
 
 translations.ru = cloneLocale(translations.en);
-translations.ru.languageLabel = "Russian";
+translations.ru.languageLabel = "Русский";
+translations.ru.hero.eyebrow = "Интерактивный гид";
+translations.ru.hero.title = "GitHub без паники";
+translations.ru.hero.description = "Понятный гид по Git и GitHub: термины, GUI и CLI, а также короткие сценарии для практики.";
+translations.ru.hero.primaryAction = "Открыть словарь";
+translations.ru.hero.secondaryAction = "Посмотреть материалы";
+translations.ru.hero.stats = [
+  { value: "4", label: "языка интерфейса" },
+  { value: "2", label: "режима работы: GUI и CLI" },
+  { value: "1", label: "маршрут от терминов до PR" },
+];
+translations.ru.overview.eyebrow = "Что внутри";
+translations.ru.overview.title = "От терминов к практике";
+translations.ru.overview.description = "Сначала разберись с базой, потом повтори рабочие сценарии GitHub шаг за шагом.";
+translations.ru.overview.pillars = [
+  { icon: "01", title: "Простой словарь", description: "Commit, branch, merge, pull request и другие термины без лишней воды." },
+  { icon: "02", title: "GUI и CLI", description: "Сравниваем кнопки и терминал в одном месте." },
+  { icon: "03", title: "Практика", description: "Новые репозитории, обновления и Pull Request в виде коротких сценариев." },
+];
+translations.ru.glossary.eyebrow = "Словарь";
+translations.ru.glossary.title = "Основные термины Git и GitHub";
+translations.ru.glossary.description = "Открывай карточки по одной и используй их как быстрый справочник.";
+translations.ru.workflow.eyebrow = "Порядок действий";
+translations.ru.workflow.title = "Когда использовать GUI, а когда CLI";
+translations.ru.workflow.description = "Оба режима работают с одним Git, меняется только способ управления.";
+translations.ru.workflow.sidebarTitle = "Почему это удобно";
+translations.ru.workflow.whenTitle = "Когда этот режим полезен";
+translations.ru.workflow.modes.gui.label = "GUI";
+translations.ru.workflow.modes.gui.title = "GitHub Desktop и веб-интерфейс";
+translations.ru.workflow.modes.gui.description = "Хорошо подходит для старта и визуального контроля изменений.";
+translations.ru.workflow.modes.gui.when = "Используй GUI, если хочешь видеть изменения глазами и меньше помнить команд.";
+translations.ru.workflow.modes.gui.reasons = ["Видно diff по файлам.", "Меньше риск ошибиться в синтаксисе.", "PR удобно заканчивать в браузере."];
+translations.ru.workflow.modes.cli.label = "CLI";
+translations.ru.workflow.modes.cli.title = "Терминал и git-команды";
+translations.ru.workflow.modes.cli.description = "Лучше всего для скорости, автоматизации и полного контроля.";
+translations.ru.workflow.modes.cli.when = "CLI полезен, если часто работаешь с ветками, CI или скриптами.";
+translations.ru.workflow.modes.cli.reasons = ["Команды работают почти везде.", "Легко автоматизировать.", "Четко видно add, commit, push, pull."];
+translations.ru.docs.eyebrow = "Документация";
+translations.ru.docs.title = "Интерактивная документация по GitHub";
+translations.ru.docs.description = "Выбирай тему и раскрывай шаги постепенно.";
+translations.ru.docs.currentLabel = "Текущая тема";
+translations.ru.playground.eyebrow = "Практика";
+translations.ru.playground.title = "Сценарии работы";
+translations.ru.playground.description = "Выбери сценарий и сравни GUI и CLI примеры.";
+translations.ru.playground.currentScenarioLabel = "Текущий сценарий";
+translations.ru.resources.eyebrow = "Видео";
+translations.ru.resources.title = "Рекомендуемые материалы";
+translations.ru.resources.description = "Продолжай обучение на коротких и понятных роликах.";
+translations.ru.footer.note = "Сначала commit, push, pull и branch, потом сложные сценарии.";
 
 translations.cs = cloneLocale(translations.en);
-translations.cs.languageLabel = "Czech";
+translations.cs.languageLabel = "Čeština";
+translations.cs.hero.eyebrow = "Interaktivni pruvodce";
+translations.cs.hero.title = "GitHub bez zmatku";
+translations.cs.hero.description = "Prehledny pruvodce zakladnimi pojmy Git a GitHub, GUI i CLI workflowem a kratkou praxi.";
+translations.cs.hero.primaryAction = "Otevrit slovnik";
+translations.cs.hero.secondaryAction = "Zobrazit materialy";
+translations.cs.hero.stats = [
+  { value: "4", label: "jazyky rozhrani" },
+  { value: "2", label: "rezimy prace: GUI a CLI" },
+  { value: "1", label: "cesta od pojmu k PR" },
+];
+translations.cs.overview.eyebrow = "Co je uvnitr";
+translations.cs.overview.title = "Od pojmu k praxi";
+translations.cs.overview.description = "Nejprve zakladni pojmy, potom prakticke scenare GitHubu krok za krokem.";
+translations.cs.overview.pillars = [
+  { icon: "01", title: "Jednoduchy slovnik", description: "Commit, branch, merge, pull request a dalsi terminy bez zahlceni." },
+  { icon: "02", title: "GUI a CLI", description: "Porovnani tlacitek a terminalu na jednom miste." },
+  { icon: "03", title: "Praxe", description: "Novy repozitar, aktualizace a Pull Request jako kratke scenare." },
+];
+translations.cs.glossary.eyebrow = "Slovnik";
+translations.cs.glossary.title = "Zakladni pojmy Git a GitHub";
+translations.cs.glossary.description = "Otevirajte karty postupne a pouzivejte je jako rychlou referenci.";
+translations.cs.workflow.eyebrow = "Postup";
+translations.cs.workflow.title = "Kdy pouzit GUI a kdy CLI";
+translations.cs.workflow.description = "Oba rezimy pouzivaji stejny Git, meni se jen ovladani.";
+translations.cs.workflow.sidebarTitle = "Proc je to uzitecne";
+translations.cs.workflow.whenTitle = "Kdy je rezim vhodny";
+translations.cs.workflow.modes.gui.label = "GUI";
+translations.cs.workflow.modes.gui.title = "GitHub Desktop a web";
+translations.cs.workflow.modes.gui.description = "Hodi se pro zacatek a vizualni kontrolu zmen.";
+translations.cs.workflow.modes.gui.when = "Pouzij GUI, pokud chces videt zmeny vizualne a pamatovat si mene prikazu.";
+translations.cs.workflow.modes.gui.reasons = ["Vidis diff po souborech.", "Mensi riziko chyby v syntaxi.", "PR je pohodlne dokoncit v prohlizeci."];
+translations.cs.workflow.modes.cli.label = "CLI";
+translations.cs.workflow.modes.cli.title = "Terminal a git prikazy";
+translations.cs.workflow.modes.cli.description = "Nejlepsi pro rychlost, automatizaci a plnou kontrolu.";
+translations.cs.workflow.modes.cli.when = "CLI je vhodne, kdyz casto pracujes s vetvemi, CI nebo skripty.";
+translations.cs.workflow.modes.cli.reasons = ["Prikazy funguji skoro vsude.", "Lze je snadno automatizovat.", "Add, commit, push a pull jsou jasne oddelene."];
+translations.cs.docs.eyebrow = "Dokumentace";
+translations.cs.docs.title = "Interaktivni dokumentace GitHubu";
+translations.cs.docs.description = "Vyber tema a odhal kroky postupne.";
+translations.cs.docs.currentLabel = "Aktualni tema";
+translations.cs.playground.eyebrow = "Praxe";
+translations.cs.playground.title = "Pracovni scenare";
+translations.cs.playground.description = "Vyber scenar a porovnej GUI a CLI priklady.";
+translations.cs.playground.currentScenarioLabel = "Aktualni scenar";
+translations.cs.resources.eyebrow = "Videa";
+translations.cs.resources.title = "Doporucene materialy";
+translations.cs.resources.description = "Pokracuj s kratkymi a srozumitelnymi videi.";
+translations.cs.footer.note = "Nejdriv commit, push, pull a branch, pak slozitejsi scenare.";
 
 translations.mock = cloneLocale(translations.en);
 translations.mock.languageLabel = "Sarcastic";
+translations.mock.hero.eyebrow = "Sarcastic mode";
+translations.mock.hero.title = "GitHub, but with extra drama";
+translations.mock.hero.description = "A slightly snarky take on Git and GitHub, for when the usual explanations feel too polite.";
+translations.mock.hero.primaryAction = "Open the chaos";
+translations.mock.hero.secondaryAction = "Read the survival guide";
+translations.mock.workflow.title = "When GUI is enough, and when CLI wins";
+translations.mock.docs.title = "GitHub, explained with a wink";
+translations.mock.playground.title = "Survival scenarios";
+translations.mock.resources.title = "Videos that hurt less than merge conflicts";
+translations.mock.footer.note = "Master commit, push, pull, and branch before fighting advanced workflows.";
 })();
