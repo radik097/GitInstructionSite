@@ -196,6 +196,110 @@ translations.ru = {
       },
     },
   },
+  docs: {
+    eyebrow: "Что такое GitHub",
+    title: "Интерактивная документация по GitHub",
+    description:
+      "Выберите тему и открывайте материал по шагам: что такое GitHub, как выглядит рабочий цикл и как не теряться в ежедневной работе.",
+    currentLabel: "Текущая тема",
+    nextStep: "Показать следующий шаг",
+    restart: "Начать тему заново",
+    showAll: "Показать все шаги",
+    showLess: "Свернуть до 1 шага",
+    counter: "Открыто шагов: {current} из {total}",
+    topics: [
+      {
+        id: "what",
+        title: "Что такое GitHub",
+        teaser: "Платформа для хранения кода и командной работы",
+        summary:
+          "GitHub это онлайн-платформа, где хранятся репозитории, история изменений и обсуждения по задачам. Он помогает работать над кодом в одиночку и в команде.",
+        points: [
+          "Репозиторий хранит файлы, commits, ветки и релизы проекта.",
+          "Issues и Pull Requests помогают обсуждать задачи и код в одном месте.",
+          "GitHub Actions позволяет автоматизировать проверку и публикацию проекта.",
+        ],
+        steps: [
+          {
+            title: "1. Создайте аккаунт и профиль",
+            description: "Заполните профиль, добавьте аватар и короткое описание. Это упростит совместную работу и коммуникацию.",
+          },
+          {
+            title: "2. Поймите структуру репозитория",
+            description: "В репозитории важны вкладки Code, Issues, Pull Requests, Actions и Settings. Именно в них проходит основной процесс разработки.",
+          },
+          {
+            title: "3. Работайте через commits",
+            description: "Каждый commit это отдельный логический шаг. Чем понятнее сообщения commit, тем проще поддерживать проект.",
+          },
+          {
+            title: "4. Обсуждайте изменения через PR",
+            description: "Pull Request показывает изменения, запускает проверки и собирает комментарии команды перед слиянием.",
+          },
+        ],
+      },
+      {
+        id: "flow",
+        title: "Базовый рабочий цикл",
+        teaser: "От изменения файла до публикации в GitHub",
+        summary:
+          "Стандартный цикл помогает работать аккуратно и без потери изменений. Его можно повторять для любой задачи.",
+        points: [
+          "Начинайте с актуальной версии проекта.",
+          "Фиксируйте изменения небольшими commit-блоками.",
+          "Публикуйте и обсуждайте изменения через Pull Request.",
+        ],
+        steps: [
+          {
+            title: "1. Получите свежие изменения",
+            description: "Перед началом выполните pull, чтобы не писать код поверх устаревшей версии.",
+          },
+          {
+            title: "2. Сделайте правки в отдельной ветке",
+            description: "Новая ветка изолирует задачу и защищает main от случайных поломок.",
+          },
+          {
+            title: "3. Проверьте diff и сделайте commit",
+            description: "Убедитесь, что коммит содержит только нужные правки и ясное сообщение.",
+          },
+          {
+            title: "4. Push и Pull Request",
+            description: "После push откройте PR, добавьте описание и запросите ревью.",
+          },
+        ],
+      },
+      {
+        id: "practice",
+        title: "Как пользоваться GitHub каждый день",
+        teaser: "Практики, которые экономят время и нервы",
+        summary:
+          "Если соблюдать несколько простых правил, работа становится стабильнее: меньше конфликтов, меньше потерь кода и быстрее ревью.",
+        points: [
+          "Пишите короткие и понятные названия веток и commit-сообщения.",
+          "Делайте PR небольшими, чтобы их проще было проверять.",
+          "Используйте README и шаблоны PR для единых правил в команде.",
+        ],
+        steps: [
+          {
+            title: "1. Планируйте задачу до кода",
+            description: "Коротко сформулируйте цель в Issue или заметке. Это помогает не расползаться по объему.",
+          },
+          {
+            title: "2. Коммитьте часто, но осмысленно",
+            description: "Каждый commit должен отвечать на вопрос что изменено и зачем.",
+          },
+          {
+            title: "3. Проверяйте себя перед PR",
+            description: "Перед отправкой PR запустите тесты, просмотрите diff и удалите случайные файлы.",
+          },
+          {
+            title: "4. Завершайте цикл ретроспективой",
+            description: "После merge зафиксируйте, что можно улучшить в процессе на следующую задачу.",
+          },
+        ],
+      },
+    ],
+  },
   playground: {
     eyebrow: "Интерактивная оболочка",
     title: "Выберите сценарий и повторите поток работы",
@@ -367,10 +471,235 @@ translations.ru = {
       },
     ],
   },
+  progressive: {
+    workflow: {
+      nextStep: "Показать следующий шаг",
+      showAll: "Показать все шаги",
+      showLess: "Свернуть до 1 шага",
+      restart: "Начать с шага 1",
+      counter: "Шагов показано: {current} из {total}",
+    },
+    resources: {
+      showMore: "Показать больше видео",
+      showLess: "Показать меньше видео",
+    },
+  },
   footer: {
     note:
       "Совет: сначала освойте commit, push, pull и branch, а уже потом углубляйтесь в merge conflicts, rebase и более сложные сценарии.",
   },
+};
+
+function cloneLocale(source) {
+  return JSON.parse(JSON.stringify(source));
+}
+
+translations.mock = cloneLocale(translations.ru);
+translations.mock.languageLabel = "Саркастичный русский";
+
+translations.mock.hero = {
+  ...translations.mock.hero,
+  eyebrow: "Саркастичный режим",
+  title: "GitHub как game-dev: красиво только на постере",
+  description:
+    "GitHub это игра на выживание: у тебя нет сейвов, босс-файты называются merge conflict, а катсцена после push обычно начинается со слов " +
+    '"Кто это сломал?"',
+  primaryAction: "Открыть механики",
+  secondaryAction: "Смотреть гайды по выживанию",
+};
+
+translations.mock.overview = {
+  ...translations.mock.overview,
+  eyebrow: "Лор",
+  title: "GitHub, где главный антагонист это ты вчерашний",
+  description:
+    "Тут ты хранишь код, теряешь рассудок и периодически спрашиваешь, кто писал этот модуль. Ответ неприятный: это был ты, в 3:47.",
+};
+
+translations.mock.glossary = {
+  ...translations.mock.glossary,
+  eyebrow: "Основные механики",
+  title: "Геймплей GitHub без спойлеров",
+  description:
+    "Открывай термины как карточки навыков. Каждая карточка звучит невинно, пока не применишь её в проде.",
+  items: [
+    {
+      term: "Repository",
+      hint: "Стартовая локация",
+      body:
+        "Твоя база и сюжетная отправная точка. Вроде безопасно, но ты уже чувствуешь, что позже здесь появится босс по имени 'сломанный релиз'.",
+    },
+    {
+      term: "Commit",
+      hint: "Сейвпоинт с риском",
+      body:
+        "Это сохранение прогресса. Сообщение 'fix' не спасает: через неделю ты не поймешь, что именно фиксилось и почему у героя 1 HP.",
+    },
+    {
+      term: "Branch",
+      hint: "Параллельная реальность",
+      body:
+        "Создаешь ветку с мыслью 'сделаю аккуратно'. Через два часа main живет своей жизнью, ветка своей, а канон исчезает в тумане.",
+    },
+    {
+      term: "Merge",
+      hint: "Финальный босс",
+      body:
+        "Ты жмешь merge, ожидая спокойствия. Git отвечает CONFLICT и выдает квест на 27 файлов. Лут сомнительный, стресс легендарный.",
+    },
+    {
+      term: "Push",
+      hint: "Отправка в прод с молитвой",
+      body:
+        "Ты отправляешь код на сервер и надеешься, что CI промолчит. Если не повезет, начинается режим быстрого ремастера всего проекта.",
+    },
+    {
+      term: "Pull",
+      hint: "Патч чужой реальности",
+      body:
+        "Забираешь изменения команды и узнаешь, что твой локальный сюжет уже не канон. Придется адаптироваться по ходу катки.",
+    },
+    {
+      term: "Pull Request",
+      hint: "Бой с ревью",
+      body:
+        "Отправляешь работу на ревью с фразой 'все готово'. В ответ получаешь список правок, и начинается вторая часть игры.",
+    },
+    {
+      term: "GitHub Actions",
+      hint: "Автоматизация страданий",
+      body:
+        "Ты настраиваешь CI/CD, чтобы все делалось само. Билд падает, лог на 300 строк, причина в YAML-отступе на один пробел.",
+    },
+  ],
+};
+
+translations.mock.docs = {
+  ...translations.mock.docs,
+  eyebrow: "Сюжетная кампания",
+  title: "Саркастичный туториал по GitHub",
+  description:
+    "Как будто это гайд от разработчика, который видел 100 merge conflict и начал философски относиться к реальности.",
+  topics: [
+    {
+      id: "what",
+      title: "Что за игра GitHub",
+      teaser: "RPG, roguelike и психологический триллер",
+      summary:
+        "GitHub это не просто хранилище кода. Это система управления хаосом, где каждый commit новый уровень, а каждый merge шанс все уничтожить.",
+      points: [
+        "Ты хранишь код и одновременно историю своих решений.",
+        "Ты видишь, как проект развивается, ломается и чинится.",
+        "Ты принимаешь факт: баги это не исключение, а механика игры.",
+      ],
+      steps: [
+        {
+          title: "1. Вход в лор",
+          description: "Прими, что старший босс это не Git, а ты из прошлого, который оставил загадочный commit message.",
+        },
+        {
+          title: "2. Изучи карту",
+          description: "Разберись с Code, Issues, Pull Requests, Actions. Это не меню, это твоя карта выживания.",
+        },
+        {
+          title: "3. Играй через коммиты",
+          description: "Делай маленькие осмысленные коммиты, чтобы не превращать историю в хоррор-роман.",
+        },
+        {
+          title: "4. Проходи босса ревью",
+          description: "PR это арена. Заходи с описанием изменений и выходи с улучшенным кодом.",
+        },
+      ],
+    },
+    {
+      id: "flow",
+      title: "Реальный игровой цикл",
+      teaser: "Написал -> запушил -> сломал -> починил",
+      summary:
+        "Типичный цикл разработчика стабилен, как сюжет в dark fantasy: сначала надежда, потом баг, потом новый уровень понимания.",
+      points: [
+        "Синхронизируйся с main до начала работы.",
+        "Работай в ветке, а не на живом main.",
+        "Пушь только после проверки, даже если очень хочется поскорее закрыть задачу.",
+      ],
+      steps: [
+        {
+          title: "1. Pull и разведка",
+          description: "Забери свежие изменения и оцени обстановку, прежде чем трогать боевые файлы.",
+        },
+        {
+          title: "2. Ветка как безопасная зона",
+          description: "Создай feature-branch и работай там. Это твой личный инстанс без урона по main.",
+        },
+        {
+          title: "3. Commit как контрольная точка",
+          description: "Фиксируй изменения порциями. Коммит должен объяснять решение, а не скрывать его.",
+        },
+        {
+          title: "4. Push, PR и суд ревьюеров",
+          description: "Публикуй ветку, открывай PR и будь готов к правкам. Это не поражение, это прокачка билда.",
+        },
+      ],
+    },
+    {
+      id: "practice",
+      title: "Психологический уровень",
+      teaser: "Как не потерять сюжет и самообладание",
+      summary:
+        "Через время ты начинаешь бояться команды git push и писать коммиты в стиле final_final_really_final. Это нормально, но лечится практикой.",
+      points: [
+        "Делай PR маленькими: меньше шума, быстрее ревью.",
+        "Пиши нормальные названия веток и коммитов.",
+        "После merge фиксируй уроки, чтобы следующий бой был легче.",
+      ],
+      steps: [
+        {
+          title: "1. План перед кодом",
+          description: "Коротко опиши задачу в Issue. Иначе побочные квесты съедят весь спринт.",
+        },
+        {
+          title: "2. Самопроверка перед PR",
+          description: "Прогони тесты, просмотри diff и убери случайные файлы. Это самый дешевый буст качества.",
+        },
+        {
+          title: "3. Принимай ревью как апгрейд",
+          description: "Комментарии это не атака персонажа, а подсказки для следующего уровня.",
+        },
+        {
+          title: "4. Держи иронию включенной",
+          description: "Сарказм спасает нервы, но процессы спасают релиз. Нужны оба режима.",
+        },
+      ],
+    },
+  ],
+};
+
+translations.mock.playground = {
+  ...translations.mock.playground,
+  title: "Сценарии выживания: сделай вид, что это легко",
+  description:
+    "Практические квесты: от первого репозитория до pull request. Да, звучит просто. Нет, не всегда просто.",
+};
+
+translations.mock.resources = {
+  ...translations.mock.resources,
+  title: "Видео, после которых merge пугает чуть меньше",
+  description:
+    "Подборка видео для тех, кто хочет меньше сюрпризов в ветках и больше контроля в реальных задачах.",
+};
+
+translations.mock.progressive.workflow = {
+  ...translations.mock.progressive.workflow,
+  nextStep: "Ладно, покажи следующий шаг",
+  showAll: "Показать все, раз уж начали",
+  showLess: "Свернуть, пока не поздно",
+  restart: "Перезапустить катку с шага 1",
+};
+
+translations.mock.progressive.resources = {
+  ...translations.mock.progressive.resources,
+  showMore: "Показать еще гайды",
+  showLess: "Свернуть список",
 };
 
 translations.cs = {
@@ -569,6 +898,110 @@ translations.cs = {
       },
     },
   },
+  docs: {
+    eyebrow: "Co je GitHub",
+    title: "Interaktivni dokumentace o GitHubu",
+    description:
+      "Vyberte si tema a otevrete obsah po krocich: co je GitHub, jak vypada bezny workflow a jak pracovat bez zmatku.",
+    currentLabel: "Aktualni tema",
+    nextStep: "Zobrazit dalsi krok",
+    restart: "Zacit tema znovu",
+    showAll: "Zobrazit vsechny kroky",
+    showLess: "Sbalit na 1 krok",
+    counter: "Otevreno kroku: {current} z {total}",
+    topics: [
+      {
+        id: "what",
+        title: "Co je GitHub",
+        teaser: "Platforma pro kod, historii zmen a spolupraci",
+        summary:
+          "GitHub je online platforma pro repozitare, historii zmen a diskusi nad ukoly. Umozni efektivni praci samostatne i v tymu.",
+        points: [
+          "Repozitar obsahuje soubory, commity, vetve a release.",
+          "Issues a Pull Requests drzi ukoly i revizi kodu na jednom miste.",
+          "GitHub Actions automatizuje testy a nasazeni.",
+        ],
+        steps: [
+          {
+            title: "1. Vytvorte ucet a profil",
+            description: "Doplnte profil a zakladni informace, at tym snadno vidi, kdo na cem pracuje.",
+          },
+          {
+            title: "2. Poznejte strukturu repozitare",
+            description: "Zakladni orientace ve zalozkach Code, Issues, Pull Requests, Actions a Settings urychli kazdou praci.",
+          },
+          {
+            title: "3. Pracujte pres commity",
+            description: "Commit je logicky krok. Jasne zpravy v commitech zlepsuji orientaci v historii.",
+          },
+          {
+            title: "4. Pouzivejte Pull Request",
+            description: "PR zobrazi zmeny, spusti kontroly a umozni tymu dat feedback pred sloucenim.",
+          },
+        ],
+      },
+      {
+        id: "flow",
+        title: "Zakladni workflow",
+        teaser: "Od upravy souboru po publikaci na GitHubu",
+        summary:
+          "Standardni workflow je opakovatelny a bezpecny. Pomaha drzet poradi kroku bez chaosu.",
+        points: [
+          "Zacinejte od aktualni verze projektu.",
+          "Delte praci do mensich, srozumitelnych commitu.",
+          "Publikujte a diskutujte zmeny pres Pull Request.",
+        ],
+        steps: [
+          {
+            title: "1. Stahnete aktualni zmeny",
+            description: "Pred upravami provedte pull, aby nevznikaly zbytecne konflikty.",
+          },
+          {
+            title: "2. Pracujte v samostatne vetvi",
+            description: "Oddelena vetev chrani main a usnadni review.",
+          },
+          {
+            title: "3. Zkontrolujte diff a vytvorte commit",
+            description: "Do commitu dejte jen relevantni upravy a jasny popis.",
+          },
+          {
+            title: "4. Push a Pull Request",
+            description: "Po push otevrete PR, doplnte kontext a pozadejte o review.",
+          },
+        ],
+      },
+      {
+        id: "practice",
+        title: "Kazdodenni praxe na GitHubu",
+        teaser: "Navyky, ktere setri cas i chyby",
+        summary:
+          "Par jednoduchych navyku zlepsi spolupraci: mene konfliktu, rychlejsi review a cistsi historie.",
+        points: [
+          "Pouzivejte konzistentni nazvy vetvi a commitu.",
+          "Posilejte mensi PR, ktere se snadneji kontroluji.",
+          "Udrzujte README a sablony PR aktualni.",
+        ],
+        steps: [
+          {
+            title: "1. Nejdriv si vyjasnete cil",
+            description: "Kratky popis ukolu v Issue drzi praci v rozsahu.",
+          },
+          {
+            title: "2. Commitujte prubezne",
+            description: "Kazdy commit by mel mit jasny smysl a kontext.",
+          },
+          {
+            title: "3. Pred PR udelejte self-check",
+            description: "Spustte testy, projdete diff a odstrante nahodne zmeny.",
+          },
+          {
+            title: "4. Ucte se po merge",
+            description: "Po dokonceni si poznamenejte, co priste zlepsit v procesu.",
+          },
+        ],
+      },
+    ],
+  },
   playground: {
     eyebrow: "Interaktivni vrstva",
     title: "Vyberte scenar a zopakujte workflow",
@@ -739,6 +1172,19 @@ translations.cs = {
         cta: "Otevrit na YouTube",
       },
     ],
+  },
+  progressive: {
+    workflow: {
+      nextStep: "Zobrazit dalsi krok",
+      showAll: "Zobrazit vsechny kroky",
+      showLess: "Sbalit na 1 krok",
+      restart: "Zacit znovu od kroku 1",
+      counter: "Zobrazeno kroku: {current} z {total}",
+    },
+    resources: {
+      showMore: "Zobrazit vice videi",
+      showLess: "Zobrazit mene videi",
+    },
   },
   footer: {
     note:
@@ -942,6 +1388,110 @@ translations.en = {
       },
     },
   },
+  docs: {
+    eyebrow: "What GitHub Is",
+    title: "Interactive GitHub Documentation",
+    description:
+      "Pick a topic and open it step by step: what GitHub is, how the workflow works, and how to use it confidently in daily work.",
+    currentLabel: "Current topic",
+    nextStep: "Show next step",
+    restart: "Restart topic",
+    showAll: "Show all steps",
+    showLess: "Collapse to 1 step",
+    counter: "Opened steps: {current} of {total}",
+    topics: [
+      {
+        id: "what",
+        title: "What GitHub Is",
+        teaser: "A platform for code hosting and collaboration",
+        summary:
+          "GitHub is an online platform where repositories, change history, and team discussions live together. It supports both solo development and team workflows.",
+        points: [
+          "A repository stores files, commits, branches, and releases.",
+          "Issues and Pull Requests keep tasks and code review in one place.",
+          "GitHub Actions can automate tests, checks, and deployment.",
+        ],
+        steps: [
+          {
+            title: "1. Create your account and profile",
+            description: "Set up your profile so teammates can identify ownership and collaboration context quickly.",
+          },
+          {
+            title: "2. Learn repository structure",
+            description: "Understand core tabs such as Code, Issues, Pull Requests, Actions, and Settings.",
+          },
+          {
+            title: "3. Work through commits",
+            description: "Treat each commit as a small logical change with a clear message.",
+          },
+          {
+            title: "4. Use Pull Requests for review",
+            description: "PRs centralize diffs, checks, and comments before merge.",
+          },
+        ],
+      },
+      {
+        id: "flow",
+        title: "Core Workflow",
+        teaser: "From local edits to published changes",
+        summary:
+          "A repeatable workflow keeps work clean and predictable. You can use this cycle for almost any task.",
+        points: [
+          "Start from an up-to-date codebase.",
+          "Commit changes in small meaningful chunks.",
+          "Publish and discuss changes through Pull Requests.",
+        ],
+        steps: [
+          {
+            title: "1. Sync latest changes",
+            description: "Pull first to avoid building on stale code and reduce conflicts.",
+          },
+          {
+            title: "2. Work in a dedicated branch",
+            description: "A feature branch isolates your task and protects main.",
+          },
+          {
+            title: "3. Review diff and commit",
+            description: "Ensure your commit contains only intentional changes and a clear message.",
+          },
+          {
+            title: "4. Push and open a PR",
+            description: "After push, create a PR with context and request review.",
+          },
+        ],
+      },
+      {
+        id: "practice",
+        title: "Daily GitHub Habits",
+        teaser: "Practical habits that keep projects healthy",
+        summary:
+          "A few habits dramatically improve quality: fewer conflicts, faster reviews, and cleaner history.",
+        points: [
+          "Use consistent branch naming and commit style.",
+          "Keep PRs small so they are easy to review.",
+          "Maintain README and PR templates for team alignment.",
+        ],
+        steps: [
+          {
+            title: "1. Define the goal before coding",
+            description: "Capture task scope in an Issue or short note to avoid drift.",
+          },
+          {
+            title: "2. Commit often with intent",
+            description: "Each commit should answer what changed and why.",
+          },
+          {
+            title: "3. Run a self-review before PR",
+            description: "Run tests, inspect diffs, and remove accidental files.",
+          },
+          {
+            title: "4. Close the loop after merge",
+            description: "Capture one process improvement for the next task.",
+          },
+        ],
+      },
+    ],
+  },
   playground: {
     eyebrow: "Interactive shell",
     title: "Pick a scenario and replay the workflow",
@@ -1113,6 +1663,19 @@ translations.en = {
       },
     ],
   },
+  progressive: {
+    workflow: {
+      nextStep: "Show next step",
+      showAll: "Show all steps",
+      showLess: "Collapse to 1 step",
+      restart: "Restart from step 1",
+      counter: "Visible steps: {current} of {total}",
+    },
+    resources: {
+      showMore: "Show more videos",
+      showLess: "Show fewer videos",
+    },
+  },
   footer: {
     note:
       "Tip: master commit, push, pull, and branch first, then go deeper into merge conflicts, rebase, and more advanced workflows.",
@@ -1130,8 +1693,12 @@ try {
 const state = {
   lang: storedLanguage,
   mode: "gui",
+  docsTopicId: "what",
+  docsVisibleSteps: 1,
   scenarioId: "start",
   exampleMode: "gui",
+  workflowVisibleSteps: 1,
+  resourcesExpanded: false,
 };
 
 const elements = {
@@ -1142,8 +1709,19 @@ const elements = {
   workflowModeTitle: document.getElementById("workflow-mode-title"),
   workflowModeDescription: document.getElementById("workflow-mode-description"),
   workflowStepsList: document.getElementById("workflow-steps-list"),
+  workflowStepCounter: document.getElementById("workflow-step-counter"),
+  workflowNextStep: document.getElementById("workflow-next-step"),
+  workflowToggleAll: document.getElementById("workflow-toggle-all"),
   workflowReasons: document.getElementById("workflow-reasons"),
   workflowWhenText: document.getElementById("workflow-when-text"),
+  docsTopicNav: document.getElementById("docs-topic-nav"),
+  docsTopicTitle: document.getElementById("docs-topic-title"),
+  docsTopicSummary: document.getElementById("docs-topic-summary"),
+  docsTopicPoints: document.getElementById("docs-topic-points"),
+  docsTopicSteps: document.getElementById("docs-topic-steps"),
+  docsStepCounter: document.getElementById("docs-step-counter"),
+  docsNextStep: document.getElementById("docs-next-step"),
+  docsToggleAll: document.getElementById("docs-toggle-all"),
   scenarioSelector: document.getElementById("scenario-selector"),
   scenarioTitle: document.getElementById("scenario-title"),
   scenarioBadge: document.getElementById("scenario-badge"),
@@ -1153,10 +1731,15 @@ const elements = {
   scenarioExampleCode: document.getElementById("scenario-example-code"),
   copyExample: document.getElementById("copy-example"),
   resourcesGrid: document.getElementById("resources-grid"),
+  resourcesToggle: document.getElementById("resources-toggle"),
   langButtons: [...document.querySelectorAll(".lang-switcher__button")],
   modeButtons: [...document.querySelectorAll(".mode-toggle__button")],
   exampleButtons: [...document.querySelectorAll(".example-switch__button")],
 };
+
+function formatTemplate(template, params) {
+  return template.replace(/\{(\w+)\}/g, (_, key) => String(params[key] ?? ""));
+}
 
 function setSimpleText(key, value) {
   document.querySelectorAll(`[data-i18n="${key}"]`).forEach((node) => {
@@ -1186,6 +1769,11 @@ function renderTextContent(locale) {
   setSimpleText("workflow.description", t.workflow.description);
   setSimpleText("workflow.sidebarTitle", t.workflow.sidebarTitle);
   setSimpleText("workflow.whenTitle", t.workflow.whenTitle);
+
+  setSimpleText("docs.eyebrow", t.docs.eyebrow);
+  setSimpleText("docs.title", t.docs.title);
+  setSimpleText("docs.description", t.docs.description);
+  setSimpleText("docs.currentLabel", t.docs.currentLabel);
 
   setSimpleText("playground.eyebrow", t.playground.eyebrow);
   setSimpleText("playground.title", t.playground.title);
@@ -1233,8 +1821,8 @@ function renderGlossary(locale) {
   const t = translations[locale];
   elements.glossaryAccordion.innerHTML = t.glossary.items
     .map(
-      (item, index) => `
-        <details class="glossary-item"${index === 0 ? " open" : ""}>
+      (item) => `
+        <details class="glossary-item">
           <summary>
             <div>
               <div class="glossary-item__term">${item.term}</div>
@@ -1247,6 +1835,21 @@ function renderGlossary(locale) {
       `
     )
     .join("");
+
+  const details = [...elements.glossaryAccordion.querySelectorAll(".glossary-item")];
+  details.forEach((detail) => {
+    detail.addEventListener("toggle", () => {
+      if (!detail.open) {
+        return;
+      }
+
+      details.forEach((other) => {
+        if (other !== detail) {
+          other.open = false;
+        }
+      });
+    });
+  });
 }
 
 function renderModeButtons(locale) {
@@ -1261,12 +1864,16 @@ function renderModeButtons(locale) {
 function renderWorkflow(locale) {
   const t = translations[locale];
   const current = t.workflow.modes[state.mode];
+  const totalSteps = current.steps.length;
+  const visibleSteps = Math.max(1, Math.min(state.workflowVisibleSteps, totalSteps));
+  const visibleReasons = Math.max(1, Math.min(visibleSteps, current.reasons.length));
 
   elements.workflowModeTitle.textContent = current.title;
   elements.workflowModeDescription.textContent = current.description;
   elements.workflowWhenText.textContent = current.when;
 
   elements.workflowStepsList.innerHTML = current.steps
+    .slice(0, visibleSteps)
     .map(
       (step, index) => `
         <article class="workflow-step">
@@ -1280,7 +1887,81 @@ function renderWorkflow(locale) {
     )
     .join("");
 
-  elements.workflowReasons.innerHTML = current.reasons.map((reason) => `<li>${reason}</li>`).join("");
+  elements.workflowReasons.innerHTML = current.reasons
+    .slice(0, visibleReasons)
+    .map((reason) => `<li>${reason}</li>`)
+    .join("");
+
+  elements.workflowStepCounter.textContent = formatTemplate(t.progressive.workflow.counter, {
+    current: visibleSteps,
+    total: totalSteps,
+  });
+
+  elements.workflowNextStep.textContent =
+    visibleSteps < totalSteps ? t.progressive.workflow.nextStep : t.progressive.workflow.restart;
+  elements.workflowToggleAll.textContent =
+    visibleSteps < totalSteps ? t.progressive.workflow.showAll : t.progressive.workflow.showLess;
+}
+
+function renderDocsNav(locale) {
+  const t = translations[locale];
+  const topics = t.docs.topics;
+
+  elements.docsTopicNav.innerHTML = topics
+    .map(
+      (topic) => `
+        <button
+          class="docs-nav__button${state.docsTopicId === topic.id ? " is-active" : ""}"
+          data-doc-topic="${topic.id}"
+          type="button"
+        >
+          <strong>${topic.title}</strong>
+          <span>${topic.teaser}</span>
+        </button>
+      `
+    )
+    .join("");
+
+  [...elements.docsTopicNav.querySelectorAll("[data-doc-topic]")].forEach((button) => {
+    button.addEventListener("click", () => {
+      state.docsTopicId = button.dataset.docTopic;
+      state.docsVisibleSteps = 1;
+      renderDocs(locale);
+      renderDocsNav(locale);
+    });
+  });
+}
+
+function renderDocs(locale) {
+  const t = translations[locale];
+  const topics = t.docs.topics;
+  const topic = topics.find((item) => item.id === state.docsTopicId) || topics[0];
+  const totalSteps = topic.steps.length;
+  const visibleSteps = Math.max(1, Math.min(state.docsVisibleSteps, totalSteps));
+
+  elements.docsTopicTitle.textContent = topic.title;
+  elements.docsTopicSummary.textContent = topic.summary;
+  elements.docsTopicPoints.innerHTML = topic.points.map((point) => `<li>${point}</li>`).join("");
+
+  elements.docsTopicSteps.innerHTML = topic.steps
+    .slice(0, visibleSteps)
+    .map(
+      (step) => `
+        <article class="docs-step">
+          <h4 class="docs-step__title">${step.title}</h4>
+          <p class="docs-step__description">${step.description}</p>
+        </article>
+      `
+    )
+    .join("");
+
+  elements.docsStepCounter.textContent = formatTemplate(t.docs.counter, {
+    current: visibleSteps,
+    total: totalSteps,
+  });
+
+  elements.docsNextStep.textContent = visibleSteps < totalSteps ? t.docs.nextStep : t.docs.restart;
+  elements.docsToggleAll.textContent = visibleSteps < totalSteps ? t.docs.showAll : t.docs.showLess;
 }
 
 function renderScenarioButtons(locale) {
@@ -1335,7 +2016,10 @@ function renderScenario(locale) {
 
 function renderResources(locale) {
   const t = translations[locale];
-  elements.resourcesGrid.innerHTML = t.resources.items
+  const previewCount = 2;
+  const resourceItems = state.resourcesExpanded ? t.resources.items : t.resources.items.slice(0, previewCount);
+
+  elements.resourcesGrid.innerHTML = resourceItems
     .map(
       (item) => `
         <article class="resource-card">
@@ -1353,6 +2037,16 @@ function renderResources(locale) {
       `
     )
     .join("");
+
+  if (t.resources.items.length <= previewCount) {
+    elements.resourcesToggle.style.display = "none";
+    return;
+  }
+
+  elements.resourcesToggle.style.display = "inline-flex";
+  elements.resourcesToggle.textContent = state.resourcesExpanded
+    ? t.progressive.resources.showLess
+    : t.progressive.resources.showMore;
 }
 
 function applyLanguage(locale) {
@@ -1371,6 +2065,8 @@ function applyLanguage(locale) {
   renderGlossary(safeLocale);
   renderModeButtons(safeLocale);
   renderWorkflow(safeLocale);
+  renderDocsNav(safeLocale);
+  renderDocs(safeLocale);
   renderScenarioButtons(safeLocale);
   renderScenario(safeLocale);
   renderResources(safeLocale);
@@ -1391,9 +2087,54 @@ elements.langButtons.forEach((button) => {
 elements.modeButtons.forEach((button) => {
   button.addEventListener("click", () => {
     state.mode = button.dataset.mode;
+    state.workflowVisibleSteps = 1;
     renderModeButtons(state.lang);
     renderWorkflow(state.lang);
   });
+});
+
+elements.workflowNextStep.addEventListener("click", () => {
+  const totalSteps = translations[state.lang].workflow.modes[state.mode].steps.length;
+  if (state.workflowVisibleSteps < totalSteps) {
+    state.workflowVisibleSteps += 1;
+  } else {
+    state.workflowVisibleSteps = 1;
+  }
+
+  renderWorkflow(state.lang);
+});
+
+elements.workflowToggleAll.addEventListener("click", () => {
+  const totalSteps = translations[state.lang].workflow.modes[state.mode].steps.length;
+  state.workflowVisibleSteps = state.workflowVisibleSteps < totalSteps ? totalSteps : 1;
+  renderWorkflow(state.lang);
+});
+
+elements.docsNextStep.addEventListener("click", () => {
+  const topics = translations[state.lang].docs.topics;
+  const topic = topics.find((item) => item.id === state.docsTopicId) || topics[0];
+  const totalSteps = topic.steps.length;
+
+  if (state.docsVisibleSteps < totalSteps) {
+    state.docsVisibleSteps += 1;
+  } else {
+    state.docsVisibleSteps = 1;
+  }
+
+  renderDocs(state.lang);
+});
+
+elements.docsToggleAll.addEventListener("click", () => {
+  const topics = translations[state.lang].docs.topics;
+  const topic = topics.find((item) => item.id === state.docsTopicId) || topics[0];
+  const totalSteps = topic.steps.length;
+  state.docsVisibleSteps = state.docsVisibleSteps < totalSteps ? totalSteps : 1;
+  renderDocs(state.lang);
+});
+
+elements.resourcesToggle.addEventListener("click", () => {
+  state.resourcesExpanded = !state.resourcesExpanded;
+  renderResources(state.lang);
 });
 
 elements.exampleButtons.forEach((button) => {

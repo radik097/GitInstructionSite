@@ -37,6 +37,7 @@
           <button class="lang-switcher__button" data-lang="ru" type="button">RU</button>
           <button class="lang-switcher__button" data-lang="cs" type="button">CZ</button>
           <button class="lang-switcher__button" data-lang="en" type="button">EN</button>
+          <button class="lang-switcher__button" data-lang="mock" type="button">SM</button>
         </div>
       </nav>
 
@@ -103,6 +104,13 @@
               <p id="workflow-mode-description"></p>
             </div>
             <div id="workflow-steps-list" class="workflow-steps__list"></div>
+            <div class="workflow-controls">
+              <p class="workflow-controls__counter" id="workflow-step-counter"></p>
+              <div class="workflow-controls__actions">
+                <button class="workflow-controls__button" id="workflow-next-step" type="button"></button>
+                <button class="workflow-controls__button workflow-controls__button--ghost" id="workflow-toggle-all" type="button"></button>
+              </div>
+            </div>
           </div>
           <aside class="workflow-sidebar">
             <div class="insight-card">
@@ -114,6 +122,36 @@
               <p id="workflow-when-text"></p>
             </div>
           </aside>
+        </div>
+      </section>
+
+      <section class="section" id="docs">
+        <div class="section__heading">
+          <p class="section__eyebrow" data-i18n="docs.eyebrow"></p>
+          <h2 data-i18n="docs.title"></h2>
+          <p data-i18n="docs.description"></p>
+        </div>
+
+        <div class="docs-layout">
+          <div class="docs-nav" id="docs-topic-nav"></div>
+          <article class="docs-card">
+            <div class="docs-card__header">
+              <p class="docs-card__label" data-i18n="docs.currentLabel"></p>
+              <h3 id="docs-topic-title"></h3>
+              <p id="docs-topic-summary"></p>
+            </div>
+
+            <ul class="docs-card__points" id="docs-topic-points"></ul>
+            <div class="docs-steps" id="docs-topic-steps"></div>
+
+            <div class="docs-controls">
+              <p class="docs-controls__counter" id="docs-step-counter"></p>
+              <div class="docs-controls__actions">
+                <button class="docs-controls__button" id="docs-next-step" type="button"></button>
+                <button class="docs-controls__button docs-controls__button--ghost" id="docs-toggle-all" type="button"></button>
+              </div>
+            </div>
+          </article>
         </div>
       </section>
 
@@ -163,6 +201,9 @@
           <p data-i18n="resources.description"></p>
         </div>
         <div class="resources-grid" id="resources-grid"></div>
+        <div class="resources-controls">
+          <button class="resources-controls__button" id="resources-toggle" type="button"></button>
+        </div>
       </section>
     </main>
 

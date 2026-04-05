@@ -544,6 +544,142 @@ code {
   gap: 22px;
 }
 
+.docs-layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.35fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.docs-nav {
+  display: grid;
+  gap: 12px;
+}
+
+.docs-nav__button {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 250, 241, 0.72);
+  color: var(--text);
+  text-align: left;
+  padding: 16px;
+  cursor: pointer;
+  transition: transform 180ms ease, background-color 180ms ease, color 180ms ease;
+}
+
+.docs-nav__button.is-active {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 14px 24px rgba(18, 107, 99, 0.24);
+}
+
+.docs-nav__button strong,
+.docs-nav__button span {
+  display: block;
+}
+
+.docs-nav__button strong {
+  margin-bottom: 4px;
+}
+
+.docs-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  padding: 24px;
+}
+
+.docs-card__label {
+  margin: 0 0 8px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.docs-card__header h3 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.docs-card__header p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.docs-card__points {
+  margin: 16px 0 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 8px;
+}
+
+.docs-card__points li {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.docs-steps {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.docs-step {
+  border: 1px solid rgba(17, 33, 29, 0.1);
+  border-radius: var(--radius-lg);
+  background: var(--surface-strong);
+  padding: 14px 16px;
+}
+
+.docs-step__title {
+  margin: 0 0 6px;
+  font-size: 1rem;
+}
+
+.docs-step__description {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.docs-controls {
+  margin-top: 16px;
+  display: grid;
+  gap: 10px;
+}
+
+.docs-controls__counter {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+.docs-controls__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.docs-controls__button {
+  border: 0;
+  cursor: pointer;
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  transition: transform 180ms ease, background-color 180ms ease, color 180ms ease;
+}
+
+.docs-controls__button--ghost {
+  background: rgba(17, 33, 29, 0.08);
+  color: var(--text);
+}
+
 .workflow-steps,
 .workflow-sidebar,
 .scenario-layout {
@@ -560,6 +696,42 @@ code {
   display: grid;
   gap: 14px;
   margin-top: 22px;
+}
+
+.workflow-controls {
+  margin-top: 14px;
+  display: grid;
+  gap: 10px;
+}
+
+.workflow-controls__counter {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+.workflow-controls__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.workflow-controls__button,
+.resources-controls__button {
+  border: 0;
+  cursor: pointer;
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  transition: transform 180ms ease, background-color 180ms ease, color 180ms ease;
+}
+
+.workflow-controls__button--ghost {
+  background: rgba(17, 33, 29, 0.08);
+  color: var(--text);
 }
 
 .workflow-step {
@@ -710,6 +882,12 @@ code {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.resources-controls {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+}
+
 .resource-card {
   display: grid;
   gap: 14px;
@@ -758,6 +936,7 @@ code {
 @media (max-width: 1024px) {
   .hero__content,
   .workflow-grid,
+  .docs-layout,
   .scenario-layout,
   .scenario-card__body {
     grid-template-columns: 1fr;
