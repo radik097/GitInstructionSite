@@ -25,7 +25,7 @@ jobs:
       - name: Prepare static site
         run: |
           mkdir -p _site
-          cp index.html script.js styles.css _site/
+          cp index.html script.js styles.css translations.js _site/
 
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3

@@ -1,0 +1,457 @@
+﻿(() => {
+const translations = (window.translations = {});
+
+translations.en = {
+  languageLabel: "English",
+  hero: {
+    eyebrow: "Interactive guide",
+    title: "GitHub without panic",
+    description:
+      "Learn core Git and GitHub terms, compare GUI and CLI workflows, and practice with short scenarios.",
+    primaryAction: "Open glossary",
+    secondaryAction: "Watch resources",
+    console: [
+      "$ git clone https://github.com/username/project.git",
+      "$ git switch -c feature/login-page",
+      "$ git add .",
+      '$ git commit -m "Add login page"',
+      "$ git push -u origin feature/login-page",
+      "",
+      "> Then open a Pull Request on GitHub for review.",
+    ],
+    stats: [
+      { value: "4", label: "interface languages" },
+      { value: "2", label: "workflow modes: GUI and CLI" },
+      { value: "1", label: "learning route from terms to PR" },
+    ],
+  },
+  overview: {
+    eyebrow: "What you get",
+    title: "From terms to real workflow",
+    description:
+      "Start with core concepts, then walk through practical flows for everyday GitHub work.",
+    pillars: [
+      {
+        icon: "01",
+        title: "Simple glossary",
+        description: "Clear definitions for commit, branch, merge, pull request, and more.",
+      },
+      {
+        icon: "02",
+        title: "GUI and CLI",
+        description: "Compare button-based and terminal-based workflows side by side.",
+      },
+      {
+        icon: "03",
+        title: "Practice scenarios",
+        description: "Repeat common tasks: start project, update code, and create PR.",
+      },
+    ],
+  },
+  glossary: {
+    eyebrow: "Glossary",
+    title: "Core Git and GitHub terms",
+    description:
+      "Open cards one by one and use them as a quick reference while you work.",
+    items: [
+      {
+        term: "Repository",
+        hint: "Project storage",
+        body: "A repository stores files, commits, branches, and project history.",
+      },
+      {
+        term: "Clone",
+        hint: "Create local copy",
+        body: "Clone downloads a remote repository to your local machine.",
+      },
+      {
+        term: "Commit",
+        hint: "Saved snapshot",
+        body: "A commit saves selected changes with a message that explains the update.",
+      },
+      {
+        term: "Push",
+        hint: "Send changes",
+        body: "Push uploads local commits to the remote repository.",
+      },
+      {
+        term: "Pull",
+        hint: "Sync changes",
+        body: "Pull fetches and merges changes from remote into your local branch.",
+      },
+      {
+        term: "Branch",
+        hint: "Separate line of work",
+        body: "A branch lets you work on features without breaking main.",
+      },
+      {
+        term: "Merge",
+        hint: "Combine branches",
+        body: "Merge combines changes from one branch into another.",
+      },
+      {
+        term: "Pull Request",
+        hint: "Review and merge",
+        body: "A PR is where teammates review changes before they are merged.",
+      },
+    ],
+  },
+  workflow: {
+    eyebrow: "Workflow",
+    title: "When to use GUI or CLI",
+    description: "Both modes use Git. Choose the style that fits your task.",
+    sidebarTitle: "Why this sequence works",
+    whenTitle: "When this mode is useful",
+    modes: {
+      gui: {
+        label: "GUI",
+        title: "GitHub Desktop and web UI",
+        description: "Best for visual diff review and beginner-friendly flow.",
+        when: "Use GUI when you want visual feedback and low command overhead.",
+        reasons: [
+          "Easy file-by-file diff review.",
+          "Lower risk of command syntax mistakes.",
+          "Natural handoff to PR review in browser.",
+        ],
+        steps: [
+          {
+            title: "Create or clone repository",
+            description: "Open project with Create New Repository or Clone Repository.",
+          },
+          {
+            title: "Edit files",
+            description: "Make changes in your editor and review detected diffs.",
+          },
+          {
+            title: "Commit changes",
+            description: "Write a clear commit message and save the snapshot.",
+          },
+          {
+            title: "Push to GitHub",
+            description: "Publish local commits to remote repository.",
+          },
+          {
+            title: "Open Pull Request",
+            description: "Create PR for discussion and merge.",
+          },
+        ],
+      },
+      cli: {
+        label: "CLI",
+        title: "Terminal workflow",
+        description: "Best for speed, automation, and full control.",
+        when: "Use CLI when you need scripting, fast repetition, or deep Git control.",
+        reasons: [
+          "Works in local, remote, and CI environments.",
+          "Easy to automate with scripts.",
+          "Clear stage separation: add, commit, push, pull.",
+        ],
+        steps: [
+          {
+            title: "Get project",
+            description: "Run git clone, or git init for a new local repository.",
+          },
+          {
+            title: "Create feature branch",
+            description: "Use git switch -c feature/name before coding.",
+          },
+          {
+            title: "Stage files",
+            description: "Use git add to include required changes only.",
+          },
+          {
+            title: "Commit",
+            description: "Save logical changes with git commit -m.",
+          },
+          {
+            title: "Push and open PR",
+            description: "Push branch and create Pull Request on GitHub.",
+          },
+        ],
+      },
+    },
+  },
+  docs: {
+    eyebrow: "Docs",
+    title: "Interactive GitHub basics",
+    description: "Pick a topic and reveal steps progressively.",
+    currentLabel: "Current topic",
+    nextStep: "Show next step",
+    restart: "Restart topic",
+    showAll: "Show all steps",
+    showLess: "Collapse to 1 step",
+    counter: "Opened steps: {current} of {total}",
+    topics: [
+      {
+        id: "what",
+        title: "What GitHub is",
+        teaser: "Code hosting and collaboration platform",
+        summary: "GitHub combines code, history, reviews, and automation in one place.",
+        points: [
+          "Repositories store files and history.",
+          "Issues and PRs keep collaboration structured.",
+          "Actions automate checks and deployment.",
+        ],
+        steps: [
+          {
+            title: "1. Create account",
+            description: "Set up your profile and project basics.",
+          },
+          {
+            title: "2. Learn repository tabs",
+            description: "Code, Issues, Pull Requests, Actions, and Settings.",
+          },
+          {
+            title: "3. Work with commits",
+            description: "Use small, meaningful commits.",
+          },
+          {
+            title: "4. Use Pull Requests",
+            description: "Review changes before merge.",
+          },
+        ],
+      },
+      {
+        id: "flow",
+        title: "Core workflow",
+        teaser: "From edit to merge",
+        summary: "A repeatable sequence makes teamwork safer and faster.",
+        points: [
+          "Sync first.",
+          "Work in feature branch.",
+          "Review before merge.",
+        ],
+        steps: [
+          {
+            title: "1. Pull latest",
+            description: "Start from current project state.",
+          },
+          {
+            title: "2. Make changes",
+            description: "Edit files in your branch.",
+          },
+          {
+            title: "3. Commit clearly",
+            description: "One logical update per commit.",
+          },
+          {
+            title: "4. Push and PR",
+            description: "Publish and request review.",
+          },
+        ],
+      },
+      {
+        id: "practice",
+        title: "Daily habits",
+        teaser: "Small rules, big payoff",
+        summary: "Consistency in naming, review size, and checks improves quality.",
+        points: [
+          "Keep PRs small.",
+          "Use clear branch names.",
+          "Run self-check before PR.",
+        ],
+        steps: [
+          {
+            title: "1. Define scope",
+            description: "Write a short task objective.",
+          },
+          {
+            title: "2. Commit often",
+            description: "Capture progress in clear chunks.",
+          },
+          {
+            title: "3. Self-review",
+            description: "Check diff and tests before PR.",
+          },
+          {
+            title: "4. Learn after merge",
+            description: "Record one improvement for next task.",
+          },
+        ],
+      },
+    ],
+  },
+  playground: {
+    eyebrow: "Playground",
+    title: "Choose scenario and repeat flow",
+    description: "Pick a practical case and compare GUI and CLI examples.",
+    currentScenarioLabel: "Current scenario",
+    copy: "Copy example",
+    copied: "Copied",
+    scenarios: [
+      {
+        id: "start",
+        title: "Start new project",
+        badge: "Getting started",
+        teaser: "Create project, first commit, and publish.",
+        summary: "Use this when creating a repository from scratch.",
+        points: [
+          "Initialize repository.",
+          "Create initial files.",
+          "Push to GitHub.",
+        ],
+        examples: {
+          gui: {
+            title: "GUI example",
+            code: [
+              "1. File -> New repository",
+              "2. Add initial project files",
+              "3. Commit to main",
+              "4. Publish repository",
+            ].join("\n"),
+          },
+          cli: {
+            title: "CLI example",
+            code: [
+              "mkdir my-project",
+              "cd my-project",
+              "git init",
+              "git add .",
+              "git commit -m \"Initial commit\"",
+              "git branch -M main",
+              "git remote add origin https://github.com/username/my-project.git",
+              "git push -u origin main",
+            ].join("\n"),
+          },
+        },
+      },
+      {
+        id: "update",
+        title: "Update repository",
+        badge: "Daily work",
+        teaser: "Sync, edit, commit, and push.",
+        summary: "Standard daily update flow for existing projects.",
+        points: [
+          "Pull latest changes.",
+          "Commit only intended edits.",
+          "Push after local check.",
+        ],
+        examples: {
+          gui: {
+            title: "GUI example",
+            code: [
+              "1. Fetch or Pull origin",
+              "2. Edit files",
+              "3. Review Changes",
+              "4. Commit and Push",
+            ].join("\n"),
+          },
+          cli: {
+            title: "CLI example",
+            code: [
+              "git pull origin main",
+              "git add README.md styles.css",
+              "git commit -m \"Update docs and styles\"",
+              "git push origin main",
+            ].join("\n"),
+          },
+        },
+      },
+      {
+        id: "pr",
+        title: "Create Pull Request",
+        badge: "Team mode",
+        teaser: "Work in branch and request review.",
+        summary: "Team-friendly flow with review before merge.",
+        points: [
+          "Create feature branch.",
+          "Push branch to remote.",
+          "Open PR and request review.",
+        ],
+        examples: {
+          gui: {
+            title: "GUI example",
+            code: [
+              "1. Current Branch -> New Branch",
+              "2. Commit changes to feature branch",
+              "3. Push origin",
+              "4. Compare & pull request",
+            ].join("\n"),
+          },
+          cli: {
+            title: "CLI example",
+            code: [
+              "git switch -c feature/profile-page",
+              "git add .",
+              "git commit -m \"Build profile page layout\"",
+              "git push -u origin feature/profile-page",
+            ].join("\n"),
+          },
+        },
+      },
+    ],
+  },
+  resources: {
+    eyebrow: "Resources",
+    title: "Recommended videos",
+    description: "Continue learning with practical beginner-friendly videos.",
+    items: [
+      {
+        title: "Git and GitHub for Beginners - Crash Course",
+        creator: "freeCodeCamp.org",
+        focus: "CLI basics",
+        duration: "Long course",
+        description: "Beginner course on Git fundamentals and GitHub workflow.",
+        url: "https://www.youtube.com/watch?v=RGOj5yH7evk",
+        cta: "Open on YouTube",
+      },
+      {
+        title: "Git and GitHub Tutorial for Beginners",
+        creator: "Kevin Stratvert",
+        focus: "CLI + GitHub UI",
+        duration: "Detailed lesson",
+        description: "Step-by-step explanation of common Git and GitHub tasks.",
+        url: "https://www.youtube.com/watch?v=tRZGeaHPoaw",
+        cta: "Open on YouTube",
+      },
+      {
+        title: "Git, GitHub, and GitHub Desktop for beginners",
+        creator: "Coder Coder",
+        focus: "GUI",
+        duration: "Short lesson",
+        description: "Quick intro using GitHub Desktop for visual learners.",
+        url: "https://www.youtube.com/watch?v=8Dd7KRpKeaE",
+        cta: "Open on YouTube",
+      },
+      {
+        title: "Creating a Simple GitHub Pull Request",
+        creator: "Jake Vanderplas",
+        focus: "Pull Request",
+        duration: "Mini guide",
+        description: "Short focused walkthrough for creating a PR.",
+        url: "https://www.youtube.com/watch?v=rgbCcBNZcdQ",
+        cta: "Open on YouTube",
+      },
+    ],
+  },
+  progressive: {
+    workflow: {
+      nextStep: "Show next step",
+      showAll: "Show all steps",
+      showLess: "Show fewer steps",
+      restart: "Restart from step 1",
+      counter: "Visible steps: {current} of {total}",
+    },
+    resources: {
+      showMore: "Show more videos",
+      showLess: "Show fewer videos",
+    },
+  },
+  footer: {
+    note: "Start with commit, push, pull, and branch, then move to advanced workflows.",
+  },
+};
+
+function cloneLocale(source) {
+  return JSON.parse(JSON.stringify(source));
+}
+
+translations.ru = cloneLocale(translations.en);
+translations.ru.languageLabel = "Russian";
+
+translations.cs = cloneLocale(translations.en);
+translations.cs.languageLabel = "Czech";
+
+translations.mock = cloneLocale(translations.en);
+translations.mock.languageLabel = "Sarcastic";
+})();
