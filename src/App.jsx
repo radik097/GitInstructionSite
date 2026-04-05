@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { translations } from "./translations";
 
 function formatTemplate(template, params) {
@@ -14,8 +14,24 @@ function getInitialLanguage() {
   }
 }
 
+function getInitialTheme() {
+  try {
+    const saved = localStorage.getItem("site-theme");
+    if (saved === "light" || saved === "dark") {
+      return saved;
+    }
+  } catch {
+    // Ignore storage issues and fall back to system preference.
+  }
+
+  return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+}
+
 export default function App() {
   const [lang, setLang] = useState(getInitialLanguage);
+  const [theme, setTheme] = useState(getInitialTheme);
   const [mode, setMode] = useState("gui");
   const [workflowVisibleSteps, setWorkflowVisibleSteps] = useState(1);
   const [resourcesExpanded, setResourcesExpanded] = useState(false);
@@ -48,6 +64,17 @@ export default function App() {
   const visibleResources = useMemo(() => {
     return resourcesExpanded ? t.resources.items : t.resources.items.slice(0, 2);
   }, [resourcesExpanded, t.resources.items]);
+
+  useEffect(() => {
+    document.body.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+
+    try {
+      localStorage.setItem("site-theme", theme);
+    } catch {
+      // Ignore storage errors.
+    }
+  }, [theme]);
 
   function changeLanguage(nextLang) {
     const safeLang = translations[nextLang] ? nextLang : "en";
@@ -106,6 +133,16 @@ export default function App() {
               <a className="topbar__link" href="#docs">Docs</a>
               <a className="topbar__link" href="#resources">Videos</a>
             </div>
+
+            <button
+              className="theme-toggle"
+              type="button"
+              onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
+              aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+              title={theme === "dark" ? "Light theme" : "Dark theme"}
+            >
+              {theme === "dark" ? "Light" : "Dark"}
+            </button>
 
             <div className="lang-switcher" aria-label="Language switcher">
               {[
