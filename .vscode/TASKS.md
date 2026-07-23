@@ -35,3 +35,15 @@
 Что сделано — заменены `index.html`, `app.js`, `styles.css`; добавлены 6 учебных глав с шагами, практическими командами, тестами и заметками; диаграмма переведена на CSS Grid без наложения карточек и стрелок; добавлена интерактивность кликов по стрелкам; выполнен `npm run build`; production `dist` проверен браузером на desktop 1440x900 и mobile 390x844: 6 глав, 4 зоны, 3 стрелки, cardOverlap=0, arrowCardOverlap=0, shellOverlap=0, bodyOverflowX=0, ошибок консоли нет, все 6 глав проходят.
 
 Дата и время — 2026-07-23 15:48:30 +10:00
+
+## Make English the default language and add gated assessments
+
+Проблема — сайт оставался частично русскоязычным, первая страница сразу выглядела как учебная глава без вводного описания, а следующие главы не были жестко заблокированы результатами тестов.
+
+Причина — предыдущая версия курса показывала главы как навигацию без строгого assessment gate и использовала один общий quiz/practice блок без проверки терминальных команд, времени и ошибок.
+
+Решение — сайт переведен на English-first интерфейс, добавлена вводная Overview-страница, каждая глава получила двухэтапный assessment: Knowledge Check и Terminal Practice. Следующая глава открывается только при 100% за Knowledge Check и 100% за Terminal Practice; paste в терминальном вводе заблокирован и считается ошибкой.
+
+Что сделано — обновлены `index.html`, `app.js`, `styles.css`; добавлены locked states для глав, requirements, success score, terminal command input, paste/drop/beforeinput блокировка, учет времени, ошибок и процента успешности; выполнен `npm run build`; production `dist` проверен браузером: `html lang=en`, Overview содержит английское описание сайта, 5 последующих глав заблокированы на старте, Knowledge Check 100% открывает Terminal Practice, paste дает ошибку и Total 50%/Gate Blocked, ручной ввод команд без ошибок дает Knowledge 100%/Terminal 100%/Total 100% и открывает Chapter 2, console errors/warnings отсутствуют, bodyOverflowX=0.
+
+Дата и время — 2026-07-23 17:22:46 +10:00

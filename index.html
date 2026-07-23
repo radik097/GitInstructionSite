@@ -1,16 +1,16 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Git Static Lab</title>
     <link rel="icon" href="data:," />
-    <link rel="stylesheet" href="./styles.css?v=20260723-chapters1" />
+    <link rel="stylesheet" href="./styles.css?v=20260723-gated1" />
   </head>
   <body>
     <div class="app-shell">
       <header class="topbar">
-        <a class="brand" href="#flow" aria-label="Git Static Lab">
+        <a class="brand" href="#overview" aria-label="Git Static Lab">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M6 3v7m0 0v11m0-11 12 7m0-7v7m0 0v4" />
             <circle cx="6" cy="3" r="2" />
@@ -20,24 +20,20 @@
           </svg>
           <span>Git Static Lab</span>
         </a>
-        <div class="chapter-path" id="chapterPath">Глава 1 / Основы Git</div>
-        <nav class="top-actions" aria-label="Быстрые действия">
-          <button class="icon-button" id="resetBtn" title="Сбросить прогресс" aria-label="Сбросить прогресс">
+        <div class="chapter-path" id="chapterPath">Overview</div>
+        <nav class="top-actions" aria-label="Quick actions">
+          <button class="icon-button" id="resetBtn" title="Reset progress" aria-label="Reset progress">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v6h6" /></svg>
             <span>Reset</span>
           </button>
-          <button class="icon-button" id="hintBtn" title="Показать подсказку" aria-label="Показать подсказку">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.7.6 1 1.2 1 2.3h6c0-1.1.3-1.7 1-2.3A7 7 0 0 0 12 2Z" /></svg>
-            <span>Hint</span>
-          </button>
-          <button class="icon-button" id="docsBtn" title="Шпаргалка" aria-label="Шпаргалка">
+          <button class="icon-button" id="docsBtn" title="Open guide" aria-label="Open guide">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15Z" /></svg>
             <span>Docs</span>
           </button>
         </nav>
       </header>
 
-      <aside class="chapter-sidebar" aria-label="Главы курса">
+      <aside class="chapter-sidebar" aria-label="Course map">
         <div class="progress-card">
           <span>Course Progress</span>
           <strong id="courseProgressText">0 / 6</strong>
@@ -49,66 +45,74 @@
       <main class="lesson-workspace">
         <section class="chapter-summary" aria-labelledby="chapterTitle">
           <div>
-            <span class="eyebrow" id="chapterEyebrow">Chapter 1</span>
-            <h1 id="chapterTitle">Основы Git</h1>
+            <span class="eyebrow" id="chapterEyebrow">Overview</span>
+            <h1 id="chapterTitle">Git Static Lab</h1>
             <p id="chapterIntro"></p>
           </div>
           <div class="chapter-meter" id="chapterMeter"></div>
         </section>
 
-        <section class="flow-shell" id="flow" aria-label="Схема движения изменений">
+        <section class="flow-shell" id="overview" aria-label="Repository map">
           <div class="flow-head">
-            <h2>Карта репозитория</h2>
-            <span id="activeFlowLabel">Workspace -> Staging -> Local Repo -> Remote</span>
+            <h2 id="flowTitle">Git Workflow Preview</h2>
+            <span id="activeFlowLabel">Workspace -> Staging -> Local Repository -> Remote</span>
           </div>
           <div class="flow-scroll">
             <div class="flow-grid" id="flowGrid"></div>
           </div>
         </section>
 
-        <section class="steps-shell" aria-label="Шаги главы">
+        <section class="steps-shell" aria-label="Chapter lessons">
           <div class="section-head">
-            <h2>Шаги главы</h2>
-            <span id="stepStatus">0 выполнено</span>
+            <h2 id="lessonSectionTitle">What you will learn</h2>
+            <span id="stepStatus">Intro</span>
           </div>
           <div class="step-list" id="stepList"></div>
         </section>
 
-        <section class="terminal-shell" aria-label="Журнал команд">
+        <section class="terminal-shell" aria-label="Terminal practice">
           <div class="section-head">
-            <h2>Терминал</h2>
-            <button class="text-button" id="clearLogBtn">Очистить журнал</button>
+            <h2>Terminal Practice</h2>
+            <span id="terminalMeta">Paste disabled</span>
           </div>
           <pre class="terminal" id="terminalOutput"></pre>
+          <div class="terminal-input-row" id="terminalInputRow">
+            <span>$</span>
+            <input id="terminalInput" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Complete Knowledge Check to unlock terminal practice" disabled />
+          </div>
         </section>
       </main>
 
-      <aside class="practice-panel" aria-label="Практика">
+      <aside class="practice-panel" aria-label="Assessment">
         <section class="practice-box">
           <div class="section-head">
-            <h2>Практика</h2>
+            <h2>Requirements</h2>
             <span id="practiceState">Ready</span>
           </div>
-          <p id="practiceText"></p>
-          <div class="command-stack" id="practiceCommands"></div>
-          <button class="primary-button" id="checkChapterBtn">Проверить главу</button>
+          <div class="requirement-list" id="requirementList"></div>
+          <button class="primary-button" id="startBtn">Start Chapter 1</button>
           <p class="result-text" id="chapterResult" aria-live="polite"></p>
         </section>
 
         <section class="quiz-box">
           <div class="section-head">
-            <h2>Тест</h2>
-            <span id="quizMeta">1 / 1</span>
+            <h2 id="assessmentTitle">Knowledge Check</h2>
+            <span id="quizMeta">0%</span>
           </div>
           <div class="progress-track"><i id="quizProgressBar"></i></div>
           <p class="question" id="questionText"></p>
           <div class="answers" id="answers"></div>
-          <button class="primary-button" id="submitAnswer">Ответить</button>
+          <button class="primary-button" id="submitAnswer">Submit</button>
           <p class="result-text" id="answerResult" aria-live="polite"></p>
         </section>
 
+        <section class="score-box">
+          <h2>Success Score</h2>
+          <div class="score-grid" id="scoreGrid"></div>
+        </section>
+
         <section class="notes-box">
-          <h2>Что важно</h2>
+          <h2>Key Notes</h2>
           <ul id="chapterNotes"></ul>
         </section>
       </aside>
@@ -122,12 +126,12 @@
 
     <div class="drawer" id="drawer" aria-hidden="true">
       <div class="drawer-panel">
-        <button class="close-drawer" id="closeDrawer" aria-label="Закрыть">x</button>
+        <button class="close-drawer" id="closeDrawer" aria-label="Close">x</button>
         <h2 id="drawerTitle">Docs</h2>
         <div id="drawerBody"></div>
       </div>
     </div>
 
-    <script type="module" src="./app.js?v=20260723-chapters1"></script>
+    <script type="module" src="./app.js?v=20260723-gated1"></script>
   </body>
 </html>

@@ -1,51 +1,45 @@
 const areas = [
-  {
-    id: "workspace",
-    title: "Workspace",
-    subtitle: "Файлы на диске",
-    accent: "green",
-    icon: "folder",
-  },
-  {
-    id: "staging",
-    title: "Staging",
-    subtitle: "Index area",
-    accent: "blue",
-    icon: "tray",
-  },
-  {
-    id: "local",
-    title: "Local Repository",
-    subtitle: ".git, коммиты и ветки",
-    accent: "amber",
-    icon: "database",
-  },
-  {
-    id: "remote",
-    title: "Remote Repository",
-    subtitle: "origin на GitHub",
-    accent: "red",
-    icon: "cloud",
-  },
+  { id: "workspace", title: "Workspace", subtitle: "Files you edit", accent: "green", icon: "folder" },
+  { id: "staging", title: "Staging Area", subtitle: "Selected changes", accent: "blue", icon: "tray" },
+  { id: "local", title: "Local Repository", subtitle: "Commits and branches", accent: "amber", icon: "database" },
+  { id: "remote", title: "Remote Repository", subtitle: "Shared origin", accent: "red", icon: "cloud" },
 ];
+
+const intro = {
+  title: "Git Static Lab",
+  intro: "An English-first static learning site for understanding how Git moves files between your working directory, staging area, local repository, and remote repository.",
+  notes: [
+    "Every chapter ends with two assessments: Knowledge Check and Terminal Practice.",
+    "Knowledge Check must score 100% before Terminal Practice unlocks.",
+    "Terminal Practice blocks paste, tracks time and mistakes, and must score 100% to unlock the next chapter.",
+    "A score of 50% or lower blocks progression and requires a retry.",
+  ],
+  steps: [
+    "Read the visual map of Git storage areas.",
+    "Study one focused chapter at a time.",
+    "Pass the knowledge test first.",
+    "Type terminal commands manually without paste.",
+  ],
+};
 
 const chapters = [
   {
-    title: "Основы Git",
-    intro: "Разбираем четыре зоны Git и то, где реально находятся изменения до и после команды.",
+    title: "Git Foundations",
+    intro: "Learn the four core places where Git keeps work and why each command moves data to a different place.",
     branch: "main",
     activeAreas: ["workspace", "staging", "local"],
     flows: ["workspace-staging", "staging-local"],
-    commands: ["git status", "git add README.md", "git commit -m \"Initial notes\""],
+    targetSeconds: 60,
     steps: [
-      "Проверить состояние файлов в Workspace.",
-      "Выбрать изменения и перенести их в Staging.",
-      "Сохранить staged-изменения коммитом в Local Repository.",
+      "Identify the working directory and its changed files.",
+      "Stage selected changes for the next snapshot.",
+      "Create a local commit from staged changes.",
     ],
+    commands: ["git status", "git add README.md", "git commit -m \"Initial notes\""],
     notes: [
-      "Workspace хранит текущие файлы проекта.",
-      "Staging собирает только то, что войдет в следующий коммит.",
-      "Local Repository хранит историю, но еще не отправляет ее на GitHub.",
+      "Workspace is your editable project folder.",
+      "Staging Area is the exact selection for the next commit.",
+      "Local Repository stores history before anything reaches GitHub.",
     ],
     items: {
       workspace: ["README.md modified", "lesson.md new", "style.css clean"],
@@ -53,57 +47,73 @@ const chapters = [
       local: ["c31a91 Initial notes", "9a21bc Project start"],
       remote: ["origin/main: 9a21bc"],
     },
-    quiz: {
-      question: "Где оказываются изменения после git add?",
-      answers: ["В Staging", "Сразу в GitHub", "В stash", "Только в pull request"],
-      correct: 0,
-    },
+    knowledge: [
+      {
+        question: "Where do changes go after git add?",
+        answers: ["Staging Area", "Remote Repository", "Stash only", "Pull request page"],
+        correct: 0,
+      },
+      {
+        question: "What does git commit store?",
+        answers: ["The staged snapshot", "Every file on the computer", "Only remote branches", "Only untracked files"],
+        correct: 0,
+      },
+    ],
   },
   {
-    title: "Коммиты",
-    intro: "Фиксируем маленькие законченные изменения и читаем историю без путаницы.",
+    title: "Reading Changes",
+    intro: "Use status and diff commands to inspect what changed before saving anything permanently.",
     branch: "main",
-    activeAreas: ["staging", "local"],
-    flows: ["staging-local"],
-    commands: ["git diff --staged", "git commit -m \"Add login copy\"", "git log --oneline"],
+    activeAreas: ["workspace", "staging"],
+    flows: ["workspace-staging"],
+    targetSeconds: 55,
     steps: [
-      "Посмотреть staged diff перед сохранением.",
-      "Создать коммит с понятным сообщением.",
-      "Проверить историю локальной ветки.",
+      "Check the short repository status.",
+      "Inspect unstaged changes.",
+      "Inspect staged changes before committing.",
     ],
+    commands: ["git status --short", "git diff", "git diff --staged"],
     notes: [
-      "Коммит создается только из Staging.",
-      "Незакоммиченные файлы остаются в Workspace.",
-      "История читается сверху вниз: новые коммиты выше.",
+      "Status answers what changed.",
+      "Diff answers exactly how it changed.",
+      "Staged diff is the final review before commit.",
     ],
     items: {
-      workspace: ["login.js modified", "notes.txt untracked"],
-      staging: ["copy.md staged", "login.css staged"],
-      local: ["a4f2e1 Add login copy", "c31a91 Initial notes"],
+      workspace: ["app.js modified", "notes.txt untracked"],
+      staging: ["README.md staged"],
+      local: ["c31a91 Initial notes"],
       remote: ["origin/main: c31a91"],
     },
-    quiz: {
-      question: "Что сохраняет git commit?",
-      answers: ["Только staged-изменения", "Все файлы на компьютере", "Только remote-ветку", "Только конфликтные файлы"],
-      correct: 0,
-    },
+    knowledge: [
+      {
+        question: "Which command shows unstaged line-level changes?",
+        answers: ["git diff", "git push", "git branch", "git clone"],
+        correct: 0,
+      },
+      {
+        question: "What does git status --short emphasize?",
+        answers: ["Compact file state", "Remote passwords", "Commit hashes only", "GitHub issues"],
+        correct: 0,
+      },
+    ],
   },
   {
-    title: "Ветки",
-    intro: "Показываем, как feature-ветка отделяется от main и почему работа остается локальной до push.",
+    title: "Branches",
+    intro: "Create a feature branch and understand that a branch is a movable pointer, not a full folder copy.",
     branch: "feature/login",
     activeAreas: ["local"],
     flows: ["local-local"],
-    commands: ["git switch -c feature/login", "git branch", "git log --oneline --decorate"],
+    targetSeconds: 60,
     steps: [
-      "Создать feature-ветку от main.",
-      "Убедиться, что HEAD стоит на новой ветке.",
-      "Посмотреть, как расходятся указатели веток.",
+      "Create a feature branch.",
+      "Confirm the active branch.",
+      "Read decorated history.",
     ],
+    commands: ["git switch -c feature/login", "git branch", "git log --oneline --decorate"],
     notes: [
-      "Ветка это указатель на коммит, а не копия папки.",
-      "HEAD показывает текущую активную ветку.",
-      "Remote не узнает о локальной ветке без push.",
+      "A branch is a pointer to a commit.",
+      "HEAD marks the current branch.",
+      "A local branch is not on origin until push.",
     ],
     items: {
       workspace: ["login.js modified"],
@@ -111,28 +121,36 @@ const chapters = [
       local: ["HEAD -> feature/login", "main -> c31a91", "feature/login -> a4f2e1"],
       remote: ["origin/main -> c31a91"],
     },
-    quiz: {
-      question: "Что такое ветка в Git?",
-      answers: ["Указатель на коммит", "Отдельная копия всего диска", "Обязательный pull request", "Файл настроек GitHub"],
-      correct: 0,
-    },
+    knowledge: [
+      {
+        question: "What is a Git branch?",
+        answers: ["A pointer to a commit", "A full disk copy", "A GitHub-only setting", "A required pull request"],
+        correct: 0,
+      },
+      {
+        question: "What does HEAD identify?",
+        answers: ["The current checkout", "The newest remote user", "A file extension", "A package manager"],
+        correct: 0,
+      },
+    ],
   },
   {
-    title: "Remote: push, fetch, pull",
-    intro: "Отделяем отправку, загрузку сведений и загрузку с немедленной интеграцией.",
+    title: "Remote Sync",
+    intro: "Separate push, fetch, and pull so remote synchronization stops feeling like one unclear operation.",
     branch: "feature/login",
     activeAreas: ["local", "remote"],
     flows: ["local-remote", "remote-local"],
-    commands: ["git push -u origin feature/login", "git fetch origin", "git pull origin main"],
+    targetSeconds: 70,
     steps: [
-      "Отправить локальную ветку на origin.",
-      "Скачать сведения о remote без изменения файлов.",
-      "Подтянуть remote-изменения в текущую ветку.",
+      "Push a local branch to origin.",
+      "Fetch remote references without changing files.",
+      "Pull changes into the current branch.",
     ],
+    commands: ["git push -u origin feature/login", "git fetch origin", "git pull origin main"],
     notes: [
-      "push двигает локальные коммиты на remote.",
-      "fetch обновляет remote-tracking ссылки.",
-      "pull это fetch плюс интеграция в текущую ветку.",
+      "Push sends local commits to origin.",
+      "Fetch updates remote-tracking references.",
+      "Pull is fetch plus integration.",
     ],
     items: {
       workspace: ["working tree clean"],
@@ -140,28 +158,36 @@ const chapters = [
       local: ["feature/login -> a4f2e1", "origin/main fetched"],
       remote: ["origin/feature/login -> a4f2e1", "origin/main -> f73b02"],
     },
-    quiz: {
-      question: "Чем git fetch отличается от git pull?",
-      answers: ["fetch не вливает изменения в текущую ветку", "fetch всегда создает коммит", "pull не использует сеть", "pull удаляет локальные файлы"],
-      correct: 0,
-    },
+    knowledge: [
+      {
+        question: "What does git fetch do?",
+        answers: ["Downloads remote references without merging", "Deletes the current branch", "Creates a commit", "Uploads staged files"],
+        correct: 0,
+      },
+      {
+        question: "How is pull different from fetch?",
+        answers: ["Pull fetches and then integrates", "Pull never uses the network", "Fetch always commits", "Fetch deletes main"],
+        correct: 0,
+      },
+    ],
   },
   {
-    title: "Merge и конфликты",
-    intro: "Вливаем feature-ветку в main и показываем, где возникает ручное разрешение конфликтов.",
+    title: "Merge and Conflicts",
+    intro: "Merge a feature branch into main and handle the point where Git needs a human decision.",
     branch: "main",
     activeAreas: ["workspace", "local"],
     flows: ["local-local", "local-workspace"],
-    commands: ["git switch main", "git merge feature/login", "git status"],
+    targetSeconds: 65,
     steps: [
-      "Переключиться на ветку, куда нужно влить изменения.",
-      "Запустить merge feature-ветки.",
-      "Проверить результат или список конфликтов.",
+      "Switch to the target branch.",
+      "Merge the feature branch.",
+      "Check whether conflicts need resolution.",
     ],
+    commands: ["git switch main", "git merge feature/login", "git status"],
     notes: [
-      "Merge изменяет историю целевой ветки.",
-      "Конфликт появляется в Workspace и требует ручного выбора строк.",
-      "После исправления конфликта нужен add и commit.",
+      "Merge changes the target branch history.",
+      "Conflicts appear in Workspace files.",
+      "Resolved conflicts must be staged and committed.",
     ],
     items: {
       workspace: ["login.js conflict", "README.md clean"],
@@ -169,29 +195,37 @@ const chapters = [
       local: ["main merge in progress", "feature/login -> a4f2e1"],
       remote: ["origin/main unchanged"],
     },
-    quiz: {
-      question: "Где Git показывает конфликтные файлы?",
-      answers: ["В Workspace", "Только в origin", "В списке пользователей", "В package.json"],
-      correct: 0,
-    },
+    knowledge: [
+      {
+        question: "Where do conflicted files appear?",
+        answers: ["Workspace", "Only origin", "User settings", "package.json"],
+        correct: 0,
+      },
+      {
+        question: "What should you do after resolving a conflict?",
+        answers: ["Stage and commit the resolution", "Delete .git", "Push without committing", "Ignore status forever"],
+        correct: 0,
+      },
+    ],
   },
   {
-    title: "Контрольная практика",
-    intro: "Полный путь: изменить файл, подготовить, закоммитить, отправить, подтянуть и влить.",
+    title: "Final Workflow",
+    intro: "Complete the whole path from edited files to a synchronized and merged branch.",
     branch: "feature/profile",
     activeAreas: ["workspace", "staging", "local", "remote"],
     flows: ["workspace-staging", "staging-local", "local-remote", "remote-local", "local-local"],
-    commands: ["git status", "git add .", "git commit -m \"Add profile page\"", "git push", "git pull", "git merge feature/profile"],
+    targetSeconds: 90,
     steps: [
-      "Понять, где лежат изменения прямо сейчас.",
-      "Провести изменения через Workspace, Staging и Local Repository.",
-      "Синхронизировать ветку с origin.",
-      "Интегрировать готовую ветку обратно в main.",
+      "Inspect current changes.",
+      "Stage and commit the work.",
+      "Synchronize the feature branch with origin.",
+      "Merge the feature branch back to main.",
     ],
+    commands: ["git status", "git add .", "git commit -m \"Add profile page\"", "git push", "git pull", "git merge feature/profile"],
     notes: [
-      "Не смешивайте add, commit и push: это разные зоны.",
-      "Перед merge полезно подтянуть свежий main.",
-      "Проверка в конце должна объяснить, какие зоны изменились.",
+      "Do not confuse add, commit, and push.",
+      "Pull fresh main before merging when collaboration is active.",
+      "The final check should explain which storage areas changed.",
     ],
     items: {
       workspace: ["profile.js modified", "avatar.css modified"],
@@ -199,86 +233,165 @@ const chapters = [
       local: ["b82df4 Add profile page", "feature/profile"],
       remote: ["origin/feature/profile -> b82df4", "origin/main -> f73b02"],
     },
-    quiz: {
-      question: "Какая цепочка верно описывает обычную отправку изменений?",
-      answers: ["Workspace -> Staging -> Local Repository -> Remote", "Remote -> Staging -> Workspace", "Staging -> Remote без commit", "Pull request -> Workspace -> add"],
-      correct: 0,
-    },
+    knowledge: [
+      {
+        question: "Which sequence describes a normal publish flow?",
+        answers: ["Workspace -> Staging -> Local Repository -> Remote", "Remote -> Staging -> Workspace", "Staging -> Remote without commit", "Pull request -> Workspace -> add"],
+        correct: 0,
+      },
+      {
+        question: "What unlocks the next chapter in this lab?",
+        answers: ["100% in both Knowledge Check and Terminal Practice", "Clicking every button once", "Any score above 10%", "Only opening Docs"],
+        correct: 0,
+      },
+    ],
   },
 ];
 
+const overviewItems = {
+  workspace: ["Edit files here", "See modified/untracked state"],
+  staging: ["Select changes", "Prepare the next snapshot"],
+  local: ["Commit history", "Branches and HEAD"],
+  remote: ["origin/main", "shared feature branches"],
+};
+
 const state = {
+  view: "intro",
   chapterIndex: 0,
-  completedChapters: new Set(),
-  completedSteps: new Map(),
-  commandLog: [],
-  quizAnswered: new Set(),
+  knowledgeAnswers: chapters.map(() => Array(2).fill(null)),
+  terminal: chapters.map(() => ({ correct: 0, mistakes: 0, startedAt: null, elapsed: 0, passed: false, score: 0, log: [] })),
+  chapterScores: chapters.map(() => ({ knowledge: 0, terminal: 0, total: 0, passed: false })),
 };
 
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => Array.from(document.querySelectorAll(selector));
 
 function init() {
-  chapters.forEach((_, index) => state.completedSteps.set(index, new Set()));
   bindEvents();
   render();
 }
 
 function bindEvents() {
   $("#resetBtn").addEventListener("click", resetLab);
-  $("#hintBtn").addEventListener("click", () => openDrawer("hint"));
   $("#docsBtn").addEventListener("click", () => openDrawer("docs"));
   $("#closeDrawer").addEventListener("click", closeDrawer);
-  $("#clearLogBtn").addEventListener("click", () => {
-    state.commandLog = [];
-    renderTerminal();
-  });
-  $("#checkChapterBtn").addEventListener("click", checkChapter);
-  $("#submitAnswer").addEventListener("click", submitAnswer);
-  document.addEventListener("click", (event) => {
-    const flowButton = event.target.closest("[data-command]");
-    if (flowButton) runDiagramCommand(flowButton.dataset.command);
+  $("#startBtn").addEventListener("click", startOrRetry);
+  $("#submitAnswer").addEventListener("click", submitKnowledge);
+  $("#terminalInput").addEventListener("keydown", handleTerminalKey);
+  $("#terminalInput").addEventListener("paste", blockPaste);
+  $("#terminalInput").addEventListener("drop", blockPaste);
+  $("#terminalInput").addEventListener("beforeinput", (event) => {
+    if (event.inputType === "insertFromPaste" || event.inputType === "insertFromDrop") blockPaste(event);
   });
 }
 
 function render() {
-  const chapter = chapters[state.chapterIndex];
-  $("#chapterPath").textContent = `Глава ${state.chapterIndex + 1} / ${chapter.title}`;
+  renderChapters();
+  if (state.view === "intro") renderIntro();
+  else renderChapter();
+}
+
+function renderIntro() {
+  $("#chapterPath").textContent = "Overview";
+  $("#chapterEyebrow").textContent = "Overview";
+  $("#chapterTitle").textContent = intro.title;
+  $("#chapterIntro").textContent = intro.intro;
+  $("#flowTitle").textContent = "Git Workflow Preview";
+  $("#activeFlowLabel").textContent = "Workspace -> Staging -> Local Repository -> Remote";
+  $("#lessonSectionTitle").textContent = "How the site works";
+  $("#stepStatus").textContent = "Start here";
+  $("#branchName").textContent = "main";
+  $("#practiceState").textContent = "Ready";
+  $("#labStatus").textContent = "Ready";
+  $("#chapterMeter").innerHTML = "";
+  $("#stepList").innerHTML = intro.steps.map((step, index) => stepTemplate(index, step, true)).join("");
+  $("#chapterNotes").innerHTML = intro.notes.map((note) => `<li>${note}</li>`).join("");
+  $("#requirementList").innerHTML = requirement("Read overview", true) + requirement("Start Chapter 1", false) + requirement("Score 100% to unlock each next chapter", false);
+  $("#startBtn").textContent = "Start Chapter 1";
+  $("#startBtn").disabled = false;
+  $("#chapterResult").textContent = "";
+  $("#assessmentTitle").textContent = "Assessment Rule";
+  $("#quizMeta").textContent = "Locked";
+  $("#quizProgressBar").style.width = "0%";
+  $("#questionText").textContent = "Assessments appear after you start a chapter.";
+  $("#answers").innerHTML = "";
+  $("#submitAnswer").disabled = true;
+  renderFlow({ activeAreas: areas.map((area) => area.id), flows: ["workspace-staging", "staging-local", "local-remote"], items: overviewItems });
+  renderScoreGrid();
+  renderTerminalPanel();
+}
+
+function renderChapter() {
+  const chapter = currentChapter();
+  const locked = isChapterLocked(state.chapterIndex);
+  const knowledgeScore = getKnowledgeScore(state.chapterIndex);
+  const terminalState = state.terminal[state.chapterIndex];
+  const chapterScore = state.chapterScores[state.chapterIndex];
+
+  $("#chapterPath").textContent = `Chapter ${state.chapterIndex + 1} / ${chapter.title}`;
   $("#chapterEyebrow").textContent = `Chapter ${state.chapterIndex + 1}`;
   $("#chapterTitle").textContent = chapter.title;
   $("#chapterIntro").textContent = chapter.intro;
-  $("#branchName").textContent = chapter.branch;
+  $("#flowTitle").textContent = locked ? "Locked Repository Map" : "Repository Map";
   $("#activeFlowLabel").textContent = flowLabel(chapter.flows);
-  $("#practiceText").textContent = chapter.intro;
-  renderChapters();
-  renderFlow(chapter);
-  renderSteps(chapter);
-  renderPractice(chapter);
-  renderQuiz(chapter);
-  renderNotes(chapter);
-  renderTerminal();
+  $("#lessonSectionTitle").textContent = "Lessons";
+  $("#stepStatus").textContent = locked ? "Locked" : `${chapter.steps.length} lessons`;
+  $("#branchName").textContent = chapter.branch;
+  $("#practiceState").textContent = locked ? "Locked" : chapterScore.passed ? "Passed" : "In progress";
+  $("#labStatus").textContent = locked ? "Locked" : chapterScore.passed ? "Chapter passed" : "Ready";
+  $("#chapterMeter").innerHTML = chapter.steps.map(() => `<i class="${chapterScore.passed ? "done" : ""}"></i>`).join("");
+  $("#stepList").innerHTML = chapter.steps.map((step, index) => stepTemplate(index, step, !locked)).join("");
+  $("#chapterNotes").innerHTML = chapter.notes.map((note) => `<li>${note}</li>`).join("");
+  $("#requirementList").innerHTML = [
+    requirement("Chapter unlocked", !locked),
+    requirement("Knowledge Check score 100%", knowledgeScore === 100),
+    requirement("Terminal Practice score 100%", terminalState.score === 100),
+    requirement("Next chapter unlocks only at 100%", chapterScore.passed),
+  ].join("");
+  $("#startBtn").textContent = chapterScore.passed ? "Passed" : "Retry Chapter";
+  $("#startBtn").disabled = locked;
+  $("#chapterResult").textContent = locked ? "Complete the previous chapter with 100% to unlock this chapter." : resultMessage(chapterScore.total);
+  $("#chapterResult").className = `result-text ${chapterScore.passed ? "success" : chapterScore.total <= 50 && chapterScore.total > 0 ? "warning" : ""}`;
+  renderFlow(locked ? { ...chapter, activeAreas: [], flows: [], items: chapter.items } : chapter);
+  renderKnowledge();
+  renderScoreGrid();
+  renderTerminalPanel();
 }
 
 function renderChapters() {
-  const done = state.completedChapters.size;
-  $("#courseProgressText").textContent = `${done} / ${chapters.length}`;
-  $("#courseProgressBar").style.width = `${(done / chapters.length) * 100}%`;
-  $("#chapterList").innerHTML = chapters.map((chapter, index) => {
-    const stepSet = state.completedSteps.get(index);
-    const completed = state.completedChapters.has(index);
-    const active = index === state.chapterIndex;
-    return `<button class="chapter-button ${active ? "active" : ""}" data-chapter="${index}">
-      <span class="chapter-number">${index + 1}</span>
-      <span><strong>${chapter.title}</strong><small>${stepSet.size} / ${chapter.steps.length} шагов</small></span>
-      <i class="${completed ? "done" : ""}">${completed ? "OK" : ""}</i>
-    </button>`;
-  }).join("");
+  const passed = state.chapterScores.filter((score) => score.passed).length;
+  $("#courseProgressText").textContent = `${passed} / ${chapters.length}`;
+  $("#courseProgressBar").style.width = `${(passed / chapters.length) * 100}%`;
+  $("#chapterList").innerHTML = [
+    `<button class="chapter-button ${state.view === "intro" ? "active" : ""}" data-intro="true">
+      <span class="chapter-number">i</span>
+      <span><strong>Overview</strong><small>What this site is</small></span>
+      <i class="done">OK</i>
+    </button>`,
+    ...chapters.map((chapter, index) => {
+      const locked = isChapterLocked(index);
+      const active = state.view === "chapter" && state.chapterIndex === index;
+      const score = state.chapterScores[index];
+      return `<button class="chapter-button ${active ? "active" : ""} ${locked ? "locked" : ""}" data-chapter="${index}" ${locked ? "aria-disabled=\"true\"" : ""}>
+        <span class="chapter-number">${index + 1}</span>
+        <span><strong>${chapter.title}</strong><small>${locked ? "Locked" : `${score.total}% success`}</small></span>
+        <i class="${score.passed ? "done" : ""}">${locked ? "L" : score.passed ? "OK" : ""}</i>
+      </button>`;
+    }),
+  ].join("");
+  $$("#chapterList [data-intro]").forEach((button) => button.addEventListener("click", () => {
+    state.view = "intro";
+    render();
+  }));
   $$("#chapterList [data-chapter]").forEach((button) => {
     button.addEventListener("click", () => {
-      state.chapterIndex = Number(button.dataset.chapter);
-      $("#chapterResult").textContent = "";
-      $("#answerResult").textContent = "";
-      $("#labStatus").textContent = "Ready";
+      const index = Number(button.dataset.chapter);
+      if (isChapterLocked(index)) {
+        $("#labStatus").textContent = "Locked";
+        return;
+      }
+      state.view = "chapter";
+      state.chapterIndex = index;
       render();
     });
   });
@@ -286,11 +399,10 @@ function renderChapters() {
 
 function renderFlow(chapter) {
   const connections = [
-    { id: "workspace-staging", label: "git add", from: "workspace", to: "staging" },
-    { id: "staging-local", label: "git commit", from: "staging", to: "local" },
-    { id: "local-remote", label: "git push", from: "local", to: "remote" },
+    { id: "workspace-staging", label: "git add" },
+    { id: "staging-local", label: "git commit" },
+    { id: "local-remote", label: "git push" },
   ];
-
   const cards = areas.map((area) => {
     const focused = chapter.activeAreas.includes(area.id);
     return `<article class="area-card ${area.accent} ${focused ? "focused" : ""}" data-area="${area.id}">
@@ -300,7 +412,6 @@ function renderFlow(chapter) {
       <ul>${chapter.items[area.id].map((item) => `<li>${item}</li>`).join("")}</ul>
     </article>`;
   });
-
   $("#flowGrid").innerHTML = `
     ${cards[0]}
     ${arrowTemplate(connections[0], chapter)}
@@ -313,159 +424,185 @@ function renderFlow(chapter) {
       ${returnChip("remote-local", "git fetch / git pull", chapter)}
       ${returnChip("local-workspace", "conflict files", chapter)}
       ${returnChip("local-local", "branch / merge", chapter)}
-    </div>
-  `;
+    </div>`;
 }
 
-function arrowTemplate(connection, chapter) {
-  const active = chapter.flows.includes(connection.id);
-  return `<button class="flow-arrow ${active ? "active" : ""}" data-command="${connection.label}">
-    <span>${connection.label}</span>
-  </button>`;
+function renderKnowledge() {
+  const chapter = currentChapter();
+  const locked = isChapterLocked(state.chapterIndex);
+  const knowledgeScore = getKnowledgeScore(state.chapterIndex);
+  $("#assessmentTitle").textContent = "Knowledge Check";
+  $("#quizMeta").textContent = `${knowledgeScore}%`;
+  $("#quizProgressBar").style.width = `${knowledgeScore}%`;
+  $("#questionText").textContent = locked
+    ? "This chapter is locked."
+    : "Answer every question correctly. Terminal Practice opens only at 100%.";
+  $("#answers").innerHTML = chapter.knowledge.map((question, questionIndex) => `
+    <fieldset class="knowledge-question">
+      <legend>${questionIndex + 1}. ${question.question}</legend>
+      ${question.answers.map((answer, answerIndex) => `
+        <label>
+          <input type="radio" name="knowledge-${questionIndex}" value="${answerIndex}" ${state.knowledgeAnswers[state.chapterIndex][questionIndex] === answerIndex ? "checked" : ""} ${locked ? "disabled" : ""} />
+          <span>${String.fromCharCode(65 + answerIndex)}. ${answer}</span>
+        </label>`).join("")}
+    </fieldset>`).join("");
+  $("#submitAnswer").disabled = locked;
+  $("#answerResult").textContent = knowledgeScore === 100 ? "Knowledge Check passed. Terminal Practice is unlocked." : "";
 }
 
-function returnChip(id, label, chapter) {
-  return `<button class="return-chip ${chapter.flows.includes(id) ? "active" : ""}" data-command="${label}">${label}</button>`;
+function renderScoreGrid() {
+  const score = state.view === "chapter" ? state.chapterScores[state.chapterIndex] : { knowledge: 0, terminal: 0, total: 0 };
+  const terminalState = state.view === "chapter" ? state.terminal[state.chapterIndex] : { mistakes: 0, elapsed: 0 };
+  $("#scoreGrid").innerHTML = `
+    <div><span>Knowledge</span><strong>${score.knowledge}%</strong></div>
+    <div><span>Terminal</span><strong>${score.terminal}%</strong></div>
+    <div><span>Total</span><strong>${score.total}%</strong></div>
+    <div><span>Time</span><strong>${formatSeconds(terminalState.elapsed)}</strong></div>
+    <div><span>Mistakes</span><strong>${terminalState.mistakes}</strong></div>
+    <div><span>Gate</span><strong>${score.passed ? "Open" : score.total <= 50 && score.total > 0 ? "Blocked" : "Locked"}</strong></div>`;
 }
 
-function renderSteps(chapter) {
-  const stepSet = state.completedSteps.get(state.chapterIndex);
-  $("#stepStatus").textContent = `${stepSet.size} выполнено`;
-  $("#chapterMeter").innerHTML = chapter.steps
-    .map((_, index) => `<i class="${stepSet.has(index) ? "done" : ""}"></i>`)
-    .join("");
-  $("#stepList").innerHTML = chapter.steps.map((step, index) => `
-    <button class="step-row ${stepSet.has(index) ? "done" : ""}" data-step="${index}">
-      <span>${index + 1}</span>
-      <strong>${step}</strong>
-    </button>
-  `).join("");
-  $$("#stepList [data-step]").forEach((button) => {
-    button.addEventListener("click", () => completeStep(Number(button.dataset.step)));
-  });
-}
-
-function renderPractice(chapter) {
-  $("#practiceCommands").innerHTML = chapter.commands.map((command, index) => `
-    <button data-run-command="${index}"><code>${command}</code></button>
-  `).join("");
-  $$("#practiceCommands [data-run-command]").forEach((button) => {
-    button.addEventListener("click", () => runCommand(Number(button.dataset.runCommand)));
-  });
-}
-
-function renderQuiz(chapter) {
-  $("#quizMeta").textContent = `${state.chapterIndex + 1} / ${chapters.length}`;
-  $("#quizProgressBar").style.width = `${(state.quizAnswered.size / chapters.length) * 100}%`;
-  $("#questionText").textContent = chapter.quiz.question;
-  $("#answers").innerHTML = chapter.quiz.answers.map((answer, index) => `
-    <label>
-      <input type="radio" name="answer" value="${index}" />
-      <span>${String.fromCharCode(65 + index)}. ${answer}</span>
-    </label>
-  `).join("");
-}
-
-function renderNotes(chapter) {
-  $("#chapterNotes").innerHTML = chapter.notes.map((note) => `<li>${note}</li>`).join("");
-}
-
-function renderTerminal() {
-  $("#terminalOutput").textContent = state.commandLog.length
-    ? state.commandLog.map((line) => `$ ${line.command}\n# ${line.note}`).join("\n\n")
-    : "# Выполненные команды появятся здесь.";
-}
-
-function completeStep(index) {
-  state.completedSteps.get(state.chapterIndex).add(index);
-  $("#practiceState").textContent = "In progress";
-  renderSteps(chapters[state.chapterIndex]);
-}
-
-function runCommand(index) {
-  const chapter = chapters[state.chapterIndex];
-  const command = chapter.commands[index];
-  completeStep(Math.min(index, chapter.steps.length - 1));
-  state.commandLog.push({ command, note: chapter.steps[Math.min(index, chapter.steps.length - 1)] });
-  $("#labStatus").textContent = "Command applied";
-  $("#practiceState").textContent = "Command applied";
-  $("#chapterResult").textContent = "";
-  renderTerminal();
-}
-
-function runDiagramCommand(label) {
-  const chapter = chapters[state.chapterIndex];
-  const commandIndex = chapter.commands.findIndex((command) => command.includes(label.replace("git ", "")) || command === label);
-  if (commandIndex >= 0) {
-    runCommand(commandIndex);
+function renderTerminalPanel() {
+  const input = $("#terminalInput");
+  if (state.view !== "chapter") {
+    $("#terminalOutput").textContent = "# Start a chapter to unlock assessments.";
+    $("#terminalMeta").textContent = "Paste disabled";
+    input.value = "";
+    input.disabled = true;
     return;
   }
-  state.commandLog.push({
-    command: label,
-    note: `Показано направление "${label}" на карте репозитория.`,
-  });
-  $("#labStatus").textContent = "Diagram action";
-  $("#practiceState").textContent = "Diagram action";
-  renderTerminal();
+  const chapter = currentChapter();
+  const terminalState = state.terminal[state.chapterIndex];
+  const knowledgeScore = getKnowledgeScore(state.chapterIndex);
+  const locked = isChapterLocked(state.chapterIndex) || knowledgeScore !== 100 || terminalState.passed;
+  const nextCommand = chapter.commands[terminalState.correct] || "completed";
+  $("#terminalMeta").textContent = `Target ${chapter.targetSeconds}s / paste disabled`;
+  $("#terminalOutput").textContent = terminalState.log.length
+    ? terminalState.log.join("\n")
+    : `# Type commands manually. Paste is blocked.\n# Next command: ${nextCommand}`;
+  input.placeholder = terminalState.passed
+    ? "Terminal Practice passed"
+    : knowledgeScore === 100
+      ? nextCommand
+      : "Complete Knowledge Check at 100% to unlock terminal practice";
+  input.disabled = locked;
 }
 
-function checkChapter() {
-  const chapter = chapters[state.chapterIndex];
-  const stepSet = state.completedSteps.get(state.chapterIndex);
-  if (stepSet.size >= chapter.steps.length) {
-    state.completedChapters.add(state.chapterIndex);
-    $("#chapterResult").textContent = "Глава пройдена: все ключевые действия выполнены.";
-    $("#chapterResult").className = "result-text success";
-    $("#labStatus").textContent = "Chapter passed";
+function submitKnowledge() {
+  if (state.view !== "chapter" || isChapterLocked(state.chapterIndex)) return;
+  const chapter = currentChapter();
+  chapter.knowledge.forEach((_, index) => {
+    const selected = $(`input[name="knowledge-${index}"]:checked`);
+    state.knowledgeAnswers[state.chapterIndex][index] = selected ? Number(selected.value) : null;
+  });
+  const score = getKnowledgeScore(state.chapterIndex);
+  updateChapterScore();
+  $("#answerResult").textContent = score === 100
+    ? "Knowledge Check passed at 100%. Terminal Practice is now available."
+    : score <= 50
+      ? `Knowledge score ${score}%. Progression is blocked at 50% or below. Retry required.`
+      : `Knowledge score ${score}%. You need 100% to continue.`;
+  $("#answerResult").className = `result-text ${score === 100 ? "success" : "warning"}`;
+  render();
+}
+
+function handleTerminalKey(event) {
+  if (event.key !== "Enter" || state.view !== "chapter") return;
+  event.preventDefault();
+  const input = event.currentTarget;
+  const command = input.value.trim();
+  if (!command) return;
+  const chapter = currentChapter();
+  const terminalState = state.terminal[state.chapterIndex];
+  if (!terminalState.startedAt) terminalState.startedAt = Date.now();
+  const expected = chapter.commands[terminalState.correct];
+  if (command === expected) {
+    terminalState.correct += 1;
+    terminalState.log.push(`$ ${command}`);
+    terminalState.log.push(`# accepted (${terminalState.correct}/${chapter.commands.length})`);
   } else {
-    $("#chapterResult").textContent = `Осталось выполнить шагов: ${chapter.steps.length - stepSet.size}.`;
-    $("#chapterResult").className = "result-text warning";
-    $("#labStatus").textContent = "Needs work";
+    terminalState.mistakes += 1;
+    terminalState.log.push(`$ ${command}`);
+    terminalState.log.push(`# mistake ${terminalState.mistakes}: expected "${expected}"`);
   }
-  renderChapters();
+  terminalState.elapsed = Math.ceil((Date.now() - terminalState.startedAt) / 1000);
+  input.value = "";
+  if (terminalState.correct >= chapter.commands.length) finishTerminalPractice();
+  updateChapterScore();
+  render();
+  if (!$("#terminalInput").disabled) $("#terminalInput").focus();
 }
 
-function submitAnswer() {
-  const selected = $("input[name='answer']:checked");
-  if (!selected) {
-    $("#answerResult").textContent = "Выберите вариант ответа.";
-    $("#answerResult").className = "result-text warning";
+function finishTerminalPractice() {
+  const chapter = currentChapter();
+  const terminalState = state.terminal[state.chapterIndex];
+  const overtime = Math.max(0, terminalState.elapsed - chapter.targetSeconds);
+  const score = Math.max(0, 100 - terminalState.mistakes * 25 - overtime * 2);
+  terminalState.score = Math.min(100, Math.round(score));
+  terminalState.passed = terminalState.score === 100;
+  terminalState.log.push(`# terminal score: ${terminalState.score}%`);
+  terminalState.log.push(terminalState.passed ? "# Terminal Practice passed at 100%." : "# Terminal Practice failed. Retry this chapter for 100%.");
+}
+
+function startOrRetry() {
+  if (state.view === "intro") {
+    state.view = "chapter";
+    state.chapterIndex = 0;
+    render();
     return;
   }
-  const chapter = chapters[state.chapterIndex];
-  const correct = Number(selected.value) === chapter.quiz.correct;
-  if (correct) state.quizAnswered.add(state.chapterIndex);
-  $("#answerResult").textContent = correct ? "Верно." : "Неверно. Сверьтесь с картой репозитория.";
-  $("#answerResult").className = `result-text ${correct ? "success" : "warning"}`;
-  renderQuiz(chapter);
+  if (isChapterLocked(state.chapterIndex)) return;
+  state.knowledgeAnswers[state.chapterIndex] = Array(currentChapter().knowledge.length).fill(null);
+  state.terminal[state.chapterIndex] = { correct: 0, mistakes: 0, startedAt: null, elapsed: 0, passed: false, score: 0, log: [] };
+  state.chapterScores[state.chapterIndex] = { knowledge: 0, terminal: 0, total: 0, passed: false };
+  render();
+}
+
+function blockPaste(event) {
+  event.preventDefault();
+  if (state.view === "chapter") {
+    const terminalState = state.terminal[state.chapterIndex];
+    terminalState.mistakes += 1;
+    terminalState.log.push("# paste blocked and counted as a mistake");
+    updateChapterScore();
+    render();
+  }
+}
+
+function updateChapterScore() {
+  const index = state.chapterIndex;
+  const knowledge = getKnowledgeScore(index);
+  const terminal = state.terminal[index].score;
+  const total = Math.round((knowledge + terminal) / 2);
+  state.chapterScores[index] = { knowledge, terminal, total, passed: knowledge === 100 && terminal === 100 };
+}
+
+function getKnowledgeScore(index) {
+  const chapter = chapters[index];
+  const answers = state.knowledgeAnswers[index];
+  const correct = chapter.knowledge.filter((question, questionIndex) => answers[questionIndex] === question.correct).length;
+  return Math.round((correct / chapter.knowledge.length) * 100);
+}
+
+function isChapterLocked(index) {
+  if (index === 0) return false;
+  return !state.chapterScores[index - 1].passed;
 }
 
 function resetLab() {
-  state.completedChapters.clear();
-  state.completedSteps.forEach((set) => set.clear());
-  state.commandLog = [];
-  state.quizAnswered.clear();
-  $("#chapterResult").textContent = "";
-  $("#answerResult").textContent = "";
-  $("#labStatus").textContent = "Ready";
-  $("#practiceState").textContent = "Ready";
+  state.view = "intro";
+  state.chapterIndex = 0;
+  state.knowledgeAnswers = chapters.map((chapter) => Array(chapter.knowledge.length).fill(null));
+  state.terminal = chapters.map(() => ({ correct: 0, mistakes: 0, startedAt: null, elapsed: 0, passed: false, score: 0, log: [] }));
+  state.chapterScores = chapters.map(() => ({ knowledge: 0, terminal: 0, total: 0, passed: false }));
   render();
 }
 
 function openDrawer(type) {
-  const chapter = chapters[state.chapterIndex];
-  const panels = {
-    hint: [
-      "Подсказка",
-      `<p>Для текущей главы пройдите шаги сверху вниз и нажимайте команды в блоке практики. Активные направления подсвечены на карте.</p>`,
-    ],
-    docs: [
-      "Шпаргалка",
-      `<h3>${chapter.title}</h3><p>${chapter.intro}</p><p><code>git add</code> переносит изменения в Staging, <code>git commit</code> сохраняет их локально, <code>git push</code> отправляет коммиты на origin, <code>git pull</code> скачивает и интегрирует изменения.</p>`,
-    ],
-  };
-  const [title, body] = panels[type] || panels.docs;
-  $("#drawerTitle").textContent = title;
+  const body = type === "docs"
+    ? `<p>Git Static Lab is fully static and GitHub Pages friendly. The default language is English. Each chapter uses a strict gate: Knowledge Check 100%, then Terminal Practice 100%, then the next chapter unlocks.</p><p>Terminal Practice blocks paste, tracks mistakes, tracks elapsed time, and calculates success percentage from those values.</p>`
+    : "";
+  $("#drawerTitle").textContent = "Guide";
   $("#drawerBody").innerHTML = body;
   $("#drawer").classList.add("open");
   $("#drawer").setAttribute("aria-hidden", "false");
@@ -476,6 +613,34 @@ function closeDrawer() {
   $("#drawer").setAttribute("aria-hidden", "true");
 }
 
+function arrowTemplate(connection, chapter) {
+  const active = chapter.flows.includes(connection.id);
+  return `<button class="flow-arrow ${active ? "active" : ""}" type="button" tabindex="-1"><span>${connection.label}</span></button>`;
+}
+
+function returnChip(id, label, chapter) {
+  return `<button class="return-chip ${chapter.flows.includes(id) ? "active" : ""}" type="button" tabindex="-1">${label}</button>`;
+}
+
+function requirement(label, done) {
+  return `<div class="requirement ${done ? "done" : ""}"><span>${label}</span><strong>${done ? "OK" : "Pending"}</strong></div>`;
+}
+
+function stepTemplate(index, step, enabled) {
+  return `<div class="step-row ${enabled ? "done" : ""}"><span>${index + 1}</span><strong>${step}</strong></div>`;
+}
+
+function currentChapter() {
+  return chapters[state.chapterIndex];
+}
+
+function resultMessage(score) {
+  if (score === 100) return "Chapter passed. The next chapter is unlocked.";
+  if (score <= 50 && score > 0) return `Current success is ${score}%. Scores at 50% or below block progression.`;
+  if (score > 50) return `Current success is ${score}%. You still need 100% to unlock the next chapter.`;
+  return "";
+}
+
 function flowLabel(flows) {
   const labels = {
     "workspace-staging": "Workspace -> Staging",
@@ -483,9 +648,15 @@ function flowLabel(flows) {
     "local-remote": "Local Repository -> Remote",
     "remote-local": "Remote -> Local Repository",
     "local-workspace": "Local Repository -> Workspace",
-    "local-local": "Branch / Merge внутри Local Repository",
+    "local-local": "Branch / Merge inside Local Repository",
   };
   return flows.map((flow) => labels[flow]).join(" + ");
+}
+
+function formatSeconds(seconds) {
+  const mins = Math.floor(seconds / 60).toString().padStart(2, "0");
+  const secs = Math.floor(seconds % 60).toString().padStart(2, "0");
+  return `${mins}:${secs}`;
 }
 
 init();

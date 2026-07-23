@@ -201,6 +201,17 @@ button {
   background: var(--blue-soft);
 }
 
+.chapter-button.locked {
+  color: #7a8798;
+  cursor: not-allowed;
+}
+
+.chapter-button.locked .chapter-number,
+.chapter-button.locked i {
+  background: #f1f5f9;
+  color: #6b7788;
+}
+
 .chapter-number {
   width: 28px;
   height: 28px;
@@ -646,7 +657,7 @@ h1 {
 .terminal {
   min-height: 168px;
   margin: 0;
-  border-radius: 0 0 8px 8px;
+  border-radius: 0;
   background: #101826;
   color: #dce7f5;
   padding: 16px 18px;
@@ -655,6 +666,41 @@ h1 {
   font-size: 13px;
   line-height: 1.55;
   white-space: pre-wrap;
+}
+
+.terminal-input-row {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  align-items: center;
+  gap: 8px;
+  border-top: 1px solid #253247;
+  border-radius: 0 0 8px 8px;
+  background: #101826;
+  padding: 12px 18px 16px;
+  color: #7ee787;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+}
+
+.terminal-input-row input {
+  min-width: 0;
+  border: 1px solid #26354c;
+  border-radius: 6px;
+  background: #0b1220;
+  color: #e8f1ff;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 13px;
+}
+
+.terminal-input-row input:disabled {
+  color: #7e8da3;
+  cursor: not-allowed;
+}
+
+.terminal-input-row input:focus {
+  border-color: #4b8bf7;
+  outline: none;
 }
 
 .practice-panel {
@@ -670,14 +716,17 @@ h1 {
 
 .practice-box,
 .quiz-box,
-.notes-box {
+.notes-box,
+.score-box {
   padding-bottom: 16px;
 }
 
 .practice-box p,
 .question,
 .result-text,
-.notes-box li {
+.notes-box li,
+.requirement,
+.score-grid div {
   color: #334155;
   font-size: 13px;
   line-height: 1.45;
@@ -687,6 +736,38 @@ h1 {
 .question,
 .notes-box ul {
   margin: 14px 16px;
+}
+
+.requirement-list {
+  display: grid;
+  gap: 8px;
+  margin: 14px 16px;
+}
+
+.requirement {
+  min-height: 42px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  padding: 9px 10px;
+}
+
+.requirement strong {
+  color: #7b8798;
+  font-size: 11px;
+}
+
+.requirement.done {
+  border-color: #b8dec7;
+  background: var(--green-soft);
+}
+
+.requirement.done strong {
+  color: var(--green);
 }
 
 .command-stack {
@@ -728,6 +809,13 @@ code {
   outline: none;
 }
 
+.primary-button:disabled {
+  border-color: #c5cfdd;
+  background: #f1f5f9;
+  color: #8793a5;
+  cursor: not-allowed;
+}
+
 .practice-box .primary-button,
 .quiz-box .primary-button {
   margin-left: 16px;
@@ -745,6 +833,26 @@ code {
   display: grid;
   gap: 8px;
   margin: 0 16px 14px;
+}
+
+.knowledge-question {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.knowledge-question + .knowledge-question {
+  margin-top: 14px;
+}
+
+.knowledge-question legend {
+  margin-bottom: 8px;
+  color: #152238;
+  font-size: 13px;
+  font-weight: 760;
+  line-height: 1.35;
 }
 
 .answers label {
@@ -777,6 +885,47 @@ code {
 
 .notes-box {
   padding: 16px;
+}
+
+.score-box {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: 0 6px 22px rgba(21, 33, 54, 0.04);
+  padding: 16px;
+}
+
+.score-box h2 {
+  margin-bottom: 14px;
+  font-size: 16px;
+  line-height: 1.2;
+}
+
+.score-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.score-grid div {
+  min-height: 58px;
+  display: grid;
+  gap: 4px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #f8fafc;
+  padding: 10px;
+}
+
+.score-grid span {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.score-grid strong {
+  color: #10203a;
+  font-size: 16px;
 }
 
 .notes-box ul {
