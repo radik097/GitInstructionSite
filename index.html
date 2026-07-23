@@ -1,220 +1,188 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GitHub Compass</title>
-  <meta
-    name="description"
-    content="Interactive multilingual guide to GitHub basics, GUI and CLI workflows, and learning videos."
-  >
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap"
-    rel="stylesheet"
-  >
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <noscript>
-    <div class="noscript-banner">
-      Please enable JavaScript to use the language switcher and interactive GitHub lessons.
-      Включите JavaScript, чтобы работали переключение языка и интерактивные уроки по GitHub.
-      Povolte JavaScript, aby fungovalo prepinani jazyka a interaktivni lekce o GitHubu.
-    </div>
-  </noscript>
-  <div class="page-shell">
-    <header class="hero">
-      <div class="hero__backdrop hero__backdrop--left"></div>
-      <div class="hero__backdrop hero__backdrop--right"></div>
-
-      <nav class="topbar">
-        <a class="brand" href="#top">
-          <span class="brand__mark">GH</span>
-          <span class="brand__text">GitHub Compass</span>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Git Static Lab</title>
+    <link rel="stylesheet" href="/styles.css?v=20260723-layout5" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#diagram" aria-label="Git Static Lab">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 3v7m0 0v11m0-11 12 7m0-7v7m0 0v4" />
+            <circle cx="6" cy="3" r="2" />
+            <circle cx="6" cy="10" r="2" />
+            <circle cx="18" cy="10" r="2" />
+            <circle cx="18" cy="17" r="2" />
+          </svg>
+          <span>Git Static Lab</span>
         </a>
+        <div class="lesson-title" id="lessonTitle">Урок 5: ветки, коммиты, push и pull</div>
+        <nav class="top-actions" aria-label="Быстрые действия">
+          <button class="icon-button" id="resetBtn" title="Сбросить лабораторию" aria-label="Сбросить лабораторию">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v6h6" /></svg>
+            <span>Reset Lab</span>
+          </button>
+          <button class="icon-button" id="hintBtn" title="Показать подсказку" aria-label="Показать подсказку">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.7.6 1 1.2 1 2.3h6c0-1.1.3-1.7 1-2.3A7 7 0 0 0 12 2Z" /></svg>
+            <span>Hint</span>
+          </button>
+          <button class="icon-button" id="docsBtn" title="Открыть шпаргалку" aria-label="Открыть шпаргалку">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15Z" /></svg>
+            <span>Docs</span>
+          </button>
+        </nav>
+      </header>
 
-        <div class="lang-switcher" aria-label="Language switcher">
-          <button class="lang-switcher__button" data-lang="ru" type="button">RU</button>
-          <button class="lang-switcher__button" data-lang="cs" type="button">CZ</button>
-          <button class="lang-switcher__button" data-lang="en" type="button">EN</button>
-          <button class="lang-switcher__button" data-lang="mock" type="button">SM</button>
+      <aside class="sidebar" aria-label="Уроки">
+        <div class="sidebar-head">
+          <span>LESSONS</span>
+          <strong id="lessonCounter">5 / 12</strong>
         </div>
-      </nav>
+        <ol class="lesson-list" id="lessonList"></ol>
+        <div class="sidebar-links">
+          <button data-panel="cheatsheet"><span>&lt;/&gt;</span>Cheat Sheet</button>
+          <button data-panel="glossary"><span>?</span>Glossary</button>
+          <button data-panel="playground"><span>$</span>Playground</button>
+        </div>
+      </aside>
 
-      <section class="hero__content" id="top">
-        <div class="hero__copy">
-          <p class="eyebrow" data-i18n="hero.eyebrow"></p>
-          <h1 data-i18n="hero.title"></h1>
-          <p class="hero__lead" data-i18n="hero.description"></p>
-          <div class="hero__actions">
-            <a class="button button--primary" href="#glossary" data-i18n="hero.primaryAction"></a>
-            <a class="button button--ghost" href="#resources" data-i18n="hero.secondaryAction"></a>
+      <main class="workspace">
+        <div class="tabs" role="tablist" aria-label="Разделы лаборатории">
+          <button class="tab active" data-view="diagram" role="tab" aria-selected="true">Diagram</button>
+          <button class="tab" data-view="terminal" role="tab" aria-selected="false">Terminal</button>
+          <button class="tab" data-view="commands" role="tab" aria-selected="false">Commands</button>
+          <button class="tab" data-view="changes" role="tab" aria-selected="false">File Changes</button>
+        </div>
+
+        <section class="view active" id="diagram" aria-label="Интерактивная схема Git">
+          <div class="diagram-header">
+            <div class="local-label">Local</div>
+            <div class="remote-label">Remote</div>
           </div>
-        </div>
-
-        <div class="hero__panel">
-          <div class="panel-card panel-card--terminal">
-            <div class="panel-card__header">
-              <span class="panel-card__dot"></span>
-              <span class="panel-card__dot"></span>
-              <span class="panel-card__dot"></span>
-            </div>
-            <pre class="hero-console"><code id="hero-console-code"></code></pre>
-          </div>
-          <div class="hero__stats" id="hero-stats"></div>
-        </div>
-      </section>
-    </header>
-
-    <main>
-      <section class="section section--surface" id="overview">
-        <div class="section__heading">
-          <p class="section__eyebrow" data-i18n="overview.eyebrow"></p>
-          <h2 data-i18n="overview.title"></h2>
-          <p data-i18n="overview.description"></p>
-        </div>
-        <div class="pillars" id="pillars"></div>
-      </section>
-
-      <section class="section" id="glossary">
-        <div class="section__heading">
-          <p class="section__eyebrow" data-i18n="glossary.eyebrow"></p>
-          <h2 data-i18n="glossary.title"></h2>
-          <p data-i18n="glossary.description"></p>
-        </div>
-        <div class="accordion-grid" id="glossary-accordion"></div>
-      </section>
-
-      <section class="section section--surface" id="workflow">
-        <div class="section__heading">
-          <p class="section__eyebrow" data-i18n="workflow.eyebrow"></p>
-          <h2 data-i18n="workflow.title"></h2>
-          <p data-i18n="workflow.description"></p>
-        </div>
-
-        <div class="mode-toggle" role="tablist" aria-label="Workflow mode">
-          <button class="mode-toggle__button" data-mode="gui" type="button"></button>
-          <button class="mode-toggle__button" data-mode="cli" type="button"></button>
-        </div>
-
-        <div class="workflow-grid">
-          <div class="workflow-steps">
-            <div class="workflow-steps__title-wrap">
-              <h3 id="workflow-mode-title"></h3>
-              <p id="workflow-mode-description"></p>
-            </div>
-            <div id="workflow-steps-list" class="workflow-steps__list"></div>
-            <div class="workflow-controls">
-              <p class="workflow-controls__counter" id="workflow-step-counter"></p>
-              <div class="workflow-controls__actions">
-                <button class="workflow-controls__button" id="workflow-next-step" type="button"></button>
-                <button class="workflow-controls__button workflow-controls__button--ghost" id="workflow-toggle-all" type="button"></button>
+          <div class="diagram-grid">
+            <section class="zone local-zone" aria-label="Локальная часть">
+              <div class="lane workspace-lane" data-lane="workspace">
+                <h2>Workspace</h2>
+                <p>Your working files</p>
+                <div class="file-list" id="workspaceFiles"></div>
               </div>
-            </div>
-          </div>
-          <aside class="workflow-sidebar">
-            <div class="insight-card">
-              <h3 data-i18n="workflow.sidebarTitle"></h3>
-              <ul id="workflow-reasons" class="reason-list"></ul>
-            </div>
-            <div class="insight-card">
-              <h3 data-i18n="workflow.whenTitle"></h3>
-              <p id="workflow-when-text"></p>
-            </div>
-          </aside>
-        </div>
-      </section>
-
-      <section class="section" id="docs">
-        <div class="section__heading">
-          <p class="section__eyebrow" data-i18n="docs.eyebrow"></p>
-          <h2 data-i18n="docs.title"></h2>
-          <p data-i18n="docs.description"></p>
-        </div>
-
-        <div class="docs-layout">
-          <div class="docs-nav" id="docs-topic-nav"></div>
-          <article class="docs-card">
-            <div class="docs-card__header">
-              <p class="docs-card__label" data-i18n="docs.currentLabel"></p>
-              <h3 id="docs-topic-title"></h3>
-              <p id="docs-topic-summary"></p>
-            </div>
-
-            <ul class="docs-card__points" id="docs-topic-points"></ul>
-            <div class="docs-steps" id="docs-topic-steps"></div>
-
-            <div class="docs-controls">
-              <p class="docs-controls__counter" id="docs-step-counter"></p>
-              <div class="docs-controls__actions">
-                <button class="docs-controls__button" id="docs-next-step" type="button"></button>
-                <button class="docs-controls__button docs-controls__button--ghost" id="docs-toggle-all" type="button"></button>
+              <div class="lane staging-lane" data-lane="staging">
+                <h2>Staging</h2>
+                <p>Index area</p>
+                <div class="file-list" id="stagingFiles"></div>
               </div>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section class="section" id="playground">
-        <div class="section__heading">
-          <p class="section__eyebrow" data-i18n="playground.eyebrow"></p>
-          <h2 data-i18n="playground.title"></h2>
-          <p data-i18n="playground.description"></p>
-        </div>
-
-        <div class="scenario-layout">
-          <div class="scenario-selector" id="scenario-selector"></div>
-          <div class="scenario-card">
-            <div class="scenario-card__header">
-              <div>
-                <p class="scenario-card__label" data-i18n="playground.currentScenarioLabel"></p>
-                <h3 id="scenario-title"></h3>
+              <div class="lane repo-lane" data-lane="local">
+                <h2>Local Repo</h2>
+                <p>.git directory</p>
+                <div class="branch-card" id="localBranch"></div>
               </div>
-              <span class="scenario-card__badge" id="scenario-badge"></span>
-            </div>
+              <button class="flow-button flow-add" data-command="add">Add<br /><kbd>git add</kbd></button>
+              <button class="flow-button flow-commit" data-command="commit">Commit<br /><kbd>git commit</kbd></button>
+              <button class="flow-button flow-merge" data-command="merge">Merge<br /><kbd>git merge</kbd></button>
+            </section>
 
-            <div class="scenario-card__body">
-              <div class="scenario-card__explanation">
-                <p id="scenario-summary"></p>
-                <ol id="scenario-points" class="scenario-points"></ol>
-              </div>
-              <div class="scenario-card__example">
-                <div class="example-switch">
-                  <button class="example-switch__button" data-mode="gui" type="button"></button>
-                  <button class="example-switch__button" data-mode="cli" type="button"></button>
-                </div>
-                <div class="example-output">
-                  <p class="example-output__title" id="scenario-example-title"></p>
-                  <pre><code id="scenario-example-code"></code></pre>
-                  <button class="copy-button" id="copy-example" type="button"></button>
-                </div>
-              </div>
+            <section class="remote-zone" aria-label="Удаленный репозиторий">
+              <h2>Remote Repository</h2>
+              <p>origin</p>
+              <div class="branch-card remote-main" id="remoteMain"></div>
+              <div class="branch-card remote-feature" id="remoteFeature"></div>
+            </section>
+
+            <div class="remote-actions" aria-label="Операции с удаленным репозиторием">
+              <button class="remote-action push" data-command="push">
+                <span>Push</span><kbd>git push</kbd>
+              </button>
+              <button class="remote-action pull" data-command="pull">
+                <span>Pull</span><kbd>git pull</kbd>
+              </button>
+              <button class="remote-action fetch" data-command="fetch">
+                <span>Fetch</span><kbd>git fetch</kbd>
+              </button>
             </div>
           </div>
-        </div>
-      </section>
+          <div class="legend" aria-label="Легенда">
+            <span><i class="green"></i>Working Change</span>
+            <span><i class="amber"></i>Merge / Integration</span>
+            <span><i class="blue"></i>Remote Operation</span>
+            <span><i class="red"></i>Conflict</span>
+          </div>
+          <output class="explanation" id="explanation">
+            Нажмите команду на схеме или справа. Сайт покажет, куда двигаются файлы и какие ветки меняются локально и на remote.
+          </output>
+        </section>
 
-      <section class="section section--surface" id="resources">
-        <div class="section__heading">
-          <p class="section__eyebrow" data-i18n="resources.eyebrow"></p>
-          <h2 data-i18n="resources.title"></h2>
-          <p data-i18n="resources.description"></p>
-        </div>
-        <div class="resources-grid" id="resources-grid"></div>
-        <div class="resources-controls">
-          <button class="resources-controls__button" id="resources-toggle" type="button"></button>
-        </div>
-      </section>
-    </main>
+        <section class="view terminal-view" id="terminal" aria-label="Терминал">
+          <div class="terminal" id="terminalOutput"></div>
+        </section>
 
-    <footer class="footer">
-      <p data-i18n="footer.note"></p>
-    </footer>
-  </div>
+        <section class="view command-view" id="commands" aria-label="Команды Git">
+          <div class="command-grid" id="commandGrid"></div>
+        </section>
 
-  <script src="translations.js"></script>
-  <script src="script.js"></script>
-</body>
+        <section class="view changes-view" id="changes" aria-label="Изменения файлов">
+          <table>
+            <thead>
+              <tr><th>Файл</th><th>Workspace</th><th>Staging</th><th>Local repo</th><th>Remote</th></tr>
+            </thead>
+            <tbody id="changesTable"></tbody>
+          </table>
+        </section>
+      </main>
+
+      <aside class="practice" aria-label="Практика">
+        <h2>Practice</h2>
+        <div class="segmented" role="tablist">
+          <button class="active" data-practice-tab="scenario">Scenario</button>
+          <button data-practice-tab="controls">Controls</button>
+        </div>
+        <section class="scenario-card active" id="scenarioPanel">
+          <h3 id="scenarioTitle">Scenario: Feature Login</h3>
+          <p id="scenarioText">Вы создали ветку feature/login и добавили форму входа. Синхронизируйте ее с origin и затем влейте в main.</p>
+          <ol id="taskList"></ol>
+          <button class="primary-button" id="checkScenario">Check Answer</button>
+        </section>
+        <section class="scenario-card" id="controlsPanel">
+          <h3>Команды</h3>
+          <div class="button-stack" id="practiceCommands"></div>
+        </section>
+
+        <section class="quiz-card">
+          <div class="quiz-head">
+            <h3>Quiz</h3>
+            <span id="quizMeta">Question 1 of 8</span>
+          </div>
+          <div class="progress"><span id="quizProgress"></span></div>
+          <p class="question" id="questionText"></p>
+          <div class="answers" id="answers"></div>
+          <button class="primary-button" id="submitAnswer">Submit Answer</button>
+          <p class="answer-result" id="answerResult" aria-live="polite"></p>
+        </section>
+
+        <section class="progress-card">
+          <div><strong>Quiz Progress</strong><span id="scoreText">0 / 8</span></div>
+          <div class="dots" id="quizDots"></div>
+        </section>
+      </aside>
+
+      <footer class="statusbar">
+        <span><i class="status-dot"></i>Lab Status: <strong id="labStatus">Ready</strong></span>
+        <span>Repository: <strong>git-static-lab</strong></span>
+        <span>Current Branch: <strong id="currentBranch">feature/login</strong></span>
+        <span>Auto-saved <i class="saved-dot"></i></span>
+      </footer>
+    </div>
+
+    <div class="drawer" id="drawer" aria-hidden="true">
+      <div class="drawer-panel">
+        <button class="close-drawer" id="closeDrawer" aria-label="Закрыть">x</button>
+        <h2 id="drawerTitle">Cheat Sheet</h2>
+        <div id="drawerBody"></div>
+      </div>
+    </div>
+
+    <script type="module" src="/app.js?v=20260723-layout5"></script>
+  </body>
 </html>
