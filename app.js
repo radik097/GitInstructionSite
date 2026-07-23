@@ -258,6 +258,7 @@ const overviewItems = {
 const state = {
   view: "intro",
   chapterIndex: 0,
+  mapHidden: false,
   knowledgeAnswers: chapters.map(() => Array(2).fill(null)),
   terminal: chapters.map(() => ({ correct: 0, mistakes: 0, startedAt: null, elapsed: 0, passed: false, score: 0, log: [] })),
   chapterScores: chapters.map(() => ({ knowledge: 0, terminal: 0, total: 0, passed: false })),
@@ -272,9 +273,15 @@ function init() {
 }
 
 function bindEvents() {
+  $("#courseBtn").addEventListener("click", () => openPanel("course"));
+  $("#requirementsBtn").addEventListener("click", () => openPanel("assessment"));
+  $("#mapToggleBtn").addEventListener("click", toggleMap);
   $("#resetBtn").addEventListener("click", resetLab);
   $("#docsBtn").addEventListener("click", () => openDrawer("docs"));
   $("#closeDrawer").addEventListener("click", closeDrawer);
+  $$("[data-close-panel]").forEach((button) => {
+    button.addEventListener("click", () => closePanel(button.dataset.closePanel));
+  });
   $("#startBtn").addEventListener("click", startOrRetry);
   $("#submitAnswer").addEventListener("click", submitKnowledge);
   $("#terminalInput").addEventListener("keydown", handleTerminalKey);
@@ -289,6 +296,7 @@ function render() {
   renderChapters();
   if (state.view === "intro") renderIntro();
   else renderChapter();
+  renderMapVisibility();
 }
 
 function renderIntro() {
@@ -319,6 +327,7 @@ function renderIntro() {
   renderFlow({ activeAreas: areas.map((area) => area.id), flows: ["workspace-staging", "staging-local", "local-remote"], items: overviewItems });
   renderScoreGrid();
   renderTerminalPanel();
+  closePanel("assessment");
 }
 
 function renderChapter() {
@@ -327,6 +336,7 @@ function renderChapter() {
   const knowledgeScore = getKnowledgeScore(state.chapterIndex);
   const terminalState = state.terminal[state.chapterIndex];
   const chapterScore = state.chapterScores[state.chapterIndex];
+  const attempted = hasAttemptedChapter(state.chapterIndex);
 
   $("#chapterPath").textContent = `Chapter ${state.chapterIndex + 1} / ${chapter.title}`;
   $("#chapterEyebrow").textContent = `Chapter ${state.chapterIndex + 1}`;
@@ -348,9 +358,9 @@ function renderChapter() {
     requirement("Terminal Practice score 100%", terminalState.score === 100),
     requirement("Next chapter unlocks only at 100%", chapterScore.passed),
   ].join("");
-  $("#startBtn").textContent = chapterScore.passed ? "Passed" : "Retry Chapter";
+  $("#startBtn").textContent = chapterScore.passed ? "Passed" : attempted ? "Retry" : "Start Chapter";
   $("#startBtn").disabled = locked;
-  $("#chapterResult").textContent = locked ? "Complete the previous chapter with 100% to unlock this chapter." : resultMessage(chapterScore.total);
+  $("#chapterResult").textContent = locked ? "Complete the previous chapter with 100% to unlock this chapter." : resultMessage(chapterScore.total, attempted);
   $("#chapterResult").className = `result-text ${chapterScore.passed ? "success" : chapterScore.total <= 50 && chapterScore.total > 0 ? "warning" : ""}`;
   renderFlow(locked ? { ...chapter, activeAreas: [], flows: [], items: chapter.items } : chapter);
   renderKnowledge();
@@ -388,6 +398,7 @@ function renderChapters() {
       const index = Number(button.dataset.chapter);
       if (isChapterLocked(index)) {
         $("#labStatus").textContent = "Locked";
+        showToast("This chapter is locked. Pass the previous chapter with 100% first.", "warning");
         return;
       }
       state.view = "chapter";
@@ -503,6 +514,8 @@ function submitKnowledge() {
       ? `Knowledge score ${score}%. Progression is blocked at 50% or below. Retry required.`
       : `Knowledge score ${score}%. You need 100% to continue.`;
   $("#answerResult").className = `result-text ${score === 100 ? "success" : "warning"}`;
+  if (score <= 50) showToast("Score is 50% or lower. Use Retry before moving on.", "warning");
+  if (score === 100) showToast("Knowledge Check passed. Terminal Practice is now the focus.", "success");
   render();
 }
 
@@ -529,6 +542,7 @@ function handleTerminalKey(event) {
   input.value = "";
   if (terminalState.correct >= chapter.commands.length) finishTerminalPractice();
   updateChapterScore();
+  if (state.chapterScores[state.chapterIndex].passed) showToast("Chapter passed at 100%. The next chapter is unlocked.", "success");
   render();
   if (!$("#terminalInput").disabled) $("#terminalInput").focus();
 }
@@ -542,12 +556,15 @@ function finishTerminalPractice() {
   terminalState.passed = terminalState.score === 100;
   terminalState.log.push(`# terminal score: ${terminalState.score}%`);
   terminalState.log.push(terminalState.passed ? "# Terminal Practice passed at 100%." : "# Terminal Practice failed. Retry this chapter for 100%.");
+  if (!terminalState.passed) showToast(`Terminal score ${terminalState.score}%. Retry is required.`, terminalState.score <= 50 ? "warning" : "info");
 }
 
 function startOrRetry() {
   if (state.view === "intro") {
     state.view = "chapter";
     state.chapterIndex = 0;
+    state.mapHidden = true;
+    showToast("Chapter started. The current task is centered; open Course or Assess when needed.", "info");
     render();
     return;
   }
@@ -555,6 +572,7 @@ function startOrRetry() {
   state.knowledgeAnswers[state.chapterIndex] = Array(currentChapter().knowledge.length).fill(null);
   state.terminal[state.chapterIndex] = { correct: 0, mistakes: 0, startedAt: null, elapsed: 0, passed: false, score: 0, log: [] };
   state.chapterScores[state.chapterIndex] = { knowledge: 0, terminal: 0, total: 0, passed: false };
+  showToast("Chapter reset. Retry from Knowledge Check.", "info");
   render();
 }
 
@@ -565,6 +583,7 @@ function blockPaste(event) {
     terminalState.mistakes += 1;
     terminalState.log.push("# paste blocked and counted as a mistake");
     updateChapterScore();
+    showToast("Paste is blocked and counted as a mistake.", "warning");
     render();
   }
 }
@@ -592,10 +611,49 @@ function isChapterLocked(index) {
 function resetLab() {
   state.view = "intro";
   state.chapterIndex = 0;
+  state.mapHidden = false;
   state.knowledgeAnswers = chapters.map((chapter) => Array(chapter.knowledge.length).fill(null));
   state.terminal = chapters.map(() => ({ correct: 0, mistakes: 0, startedAt: null, elapsed: 0, passed: false, score: 0, log: [] }));
   state.chapterScores = chapters.map(() => ({ knowledge: 0, terminal: 0, total: 0, passed: false }));
   render();
+}
+
+function toggleMap() {
+  state.mapHidden = !state.mapHidden;
+  renderMapVisibility();
+  showToast(state.mapHidden ? "Repository Map hidden." : "Repository Map shown.", "info");
+}
+
+function renderMapVisibility() {
+  const flow = $("#overview");
+  const button = $("#mapToggleBtn");
+  flow.classList.toggle("map-hidden", state.mapHidden);
+  button.querySelector("span").textContent = state.mapHidden ? "Show Map" : "Hide Map";
+  button.setAttribute("title", state.mapHidden ? "Show repository map" : "Hide repository map");
+  button.setAttribute("aria-label", state.mapHidden ? "Show repository map" : "Hide repository map");
+}
+
+function openPanel(panel) {
+  const target = panel === "course" ? $(".chapter-sidebar") : $(".practice-panel");
+  target.classList.add("open");
+  target.setAttribute("aria-hidden", "false");
+}
+
+function closePanel(panel) {
+  const target = panel === "course" ? $(".chapter-sidebar") : $(".practice-panel");
+  target.classList.remove("open");
+  target.setAttribute("aria-hidden", "true");
+}
+
+let toastTimer;
+function showToast(message, tone = "info") {
+  const toast = $("#toast");
+  window.clearTimeout(toastTimer);
+  toast.textContent = message;
+  toast.className = `toast open ${tone}`;
+  toastTimer = window.setTimeout(() => {
+    toast.className = "toast";
+  }, 3200);
 }
 
 function openDrawer(type) {
@@ -634,11 +692,17 @@ function currentChapter() {
   return chapters[state.chapterIndex];
 }
 
-function resultMessage(score) {
+function resultMessage(score, attempted = false) {
   if (score === 100) return "Chapter passed. The next chapter is unlocked.";
-  if (score <= 50 && score > 0) return `Current success is ${score}%. Scores at 50% or below block progression.`;
+  if (score <= 50 && attempted) return `Current success is ${score}%. Scores at 50% or below block progression. Use Retry.`;
   if (score > 50) return `Current success is ${score}%. You still need 100% to unlock the next chapter.`;
   return "";
+}
+
+function hasAttemptedChapter(index) {
+  const hasKnowledge = state.knowledgeAnswers[index].some((answer) => answer !== null);
+  const terminalState = state.terminal[index];
+  return hasKnowledge || terminalState.correct > 0 || terminalState.mistakes > 0 || terminalState.log.length > 0;
 }
 
 function flowLabel(flows) {

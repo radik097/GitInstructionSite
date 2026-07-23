@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Git Static Lab</title>
     <link rel="icon" href="data:," />
-    <link rel="stylesheet" href="./styles.css?v=20260723-gated1" />
+    <link rel="stylesheet" href="./styles.css?v=20260723-focus1" />
   </head>
   <body>
     <div class="app-shell">
@@ -22,6 +22,18 @@
         </a>
         <div class="chapter-path" id="chapterPath">Overview</div>
         <nav class="top-actions" aria-label="Quick actions">
+          <button class="icon-button" id="courseBtn" title="Open course map" aria-label="Open course map">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
+            <span>Course</span>
+          </button>
+          <button class="icon-button" id="requirementsBtn" title="Open requirements" aria-label="Open requirements">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 11 3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg>
+            <span>Assess</span>
+          </button>
+          <button class="icon-button" id="mapToggleBtn" title="Hide repository map" aria-label="Hide repository map">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18" /></svg>
+            <span>Hide Map</span>
+          </button>
           <button class="icon-button" id="resetBtn" title="Reset progress" aria-label="Reset progress">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v6h6" /></svg>
             <span>Reset</span>
@@ -34,6 +46,10 @@
       </header>
 
       <aside class="chapter-sidebar" aria-label="Course map">
+        <div class="panel-head">
+          <h2>Course Map</h2>
+          <button class="panel-close" data-close-panel="course" aria-label="Close course map">x</button>
+        </div>
         <div class="progress-card">
           <span>Course Progress</span>
           <strong id="courseProgressText">0 / 6</strong>
@@ -50,6 +66,11 @@
             <p id="chapterIntro"></p>
           </div>
           <div class="chapter-meter" id="chapterMeter"></div>
+        </section>
+
+        <section class="focus-action-shell" aria-label="Current action">
+          <button class="primary-button" id="startBtn">Start Chapter 1</button>
+          <p class="result-text" id="chapterResult" aria-live="polite"></p>
         </section>
 
         <section class="flow-shell" id="overview" aria-label="Repository map">
@@ -70,6 +91,18 @@
           <div class="step-list" id="stepList"></div>
         </section>
 
+        <section class="quiz-box" aria-label="Knowledge check">
+          <div class="section-head">
+            <h2 id="assessmentTitle">Knowledge Check</h2>
+            <span id="quizMeta">0%</span>
+          </div>
+          <div class="progress-track"><i id="quizProgressBar"></i></div>
+          <p class="question" id="questionText"></p>
+          <div class="answers" id="answers"></div>
+          <button class="primary-button" id="submitAnswer">Submit</button>
+          <p class="result-text" id="answerResult" aria-live="polite"></p>
+        </section>
+
         <section class="terminal-shell" aria-label="Terminal practice">
           <div class="section-head">
             <h2>Terminal Practice</h2>
@@ -84,26 +117,16 @@
       </main>
 
       <aside class="practice-panel" aria-label="Assessment">
+        <div class="panel-head">
+          <h2>Assessment Panel</h2>
+          <button class="panel-close" data-close-panel="assessment" aria-label="Close assessment panel">x</button>
+        </div>
         <section class="practice-box">
           <div class="section-head">
             <h2>Requirements</h2>
             <span id="practiceState">Ready</span>
           </div>
           <div class="requirement-list" id="requirementList"></div>
-          <button class="primary-button" id="startBtn">Start Chapter 1</button>
-          <p class="result-text" id="chapterResult" aria-live="polite"></p>
-        </section>
-
-        <section class="quiz-box">
-          <div class="section-head">
-            <h2 id="assessmentTitle">Knowledge Check</h2>
-            <span id="quizMeta">0%</span>
-          </div>
-          <div class="progress-track"><i id="quizProgressBar"></i></div>
-          <p class="question" id="questionText"></p>
-          <div class="answers" id="answers"></div>
-          <button class="primary-button" id="submitAnswer">Submit</button>
-          <p class="result-text" id="answerResult" aria-live="polite"></p>
         </section>
 
         <section class="score-box">
@@ -132,6 +155,8 @@
       </div>
     </div>
 
-    <script type="module" src="./app.js?v=20260723-gated1"></script>
+    <div class="toast" id="toast" aria-live="polite"></div>
+
+    <script type="module" src="./app.js?v=20260723-focus1"></script>
   </body>
 </html>
