@@ -47,3 +47,15 @@
 Что сделано — обновлены `index.html`, `app.js`, `styles.css`; добавлены locked states для глав, requirements, success score, terminal command input, paste/drop/beforeinput блокировка, учет времени, ошибок и процента успешности; выполнен `npm run build`; production `dist` проверен браузером: `html lang=en`, Overview содержит английское описание сайта, 5 последующих глав заблокированы на старте, Knowledge Check 100% открывает Terminal Practice, paste дает ошибку и Total 50%/Gate Blocked, ручной ввод команд без ошибок дает Knowledge 100%/Terminal 100%/Total 100% и открывает Chapter 2, console errors/warnings отсутствуют, bodyOverflowX=0.
 
 Дата и время — 2026-07-23 17:22:46 +10:00
+
+## Add focus mode, hidden repository map, and retry gate state
+
+Проблема — экран все еще держал Course Map и Assessment как постоянные боковые колонки, из-за чего текущая задача не была в центре внимания; Repository Map нельзя было скрыть, а при недостаточном score Retry-состояние было недостаточно явным.
+
+Причина — layout оставался трехколоночным, а вспомогательные блоки были частью постоянного экрана вместо пользовательских/системных панелей.
+
+Решение — интерфейс переведен в focus-mode: центральная рабочая область стала основной, Course Map и Assessment открываются как выезжающие панели по кнопкам, Repository Map скрывается/показывается отдельной кнопкой, системные состояния показываются toast-уведомлениями, при score <=50 появляется явный центральный Retry-state.
+
+Что сделано — обновлены `index.html`, `app.js`, `styles.css`; добавлены кнопки `Course`, `Assess`, `Hide/Show Map`; Course Map и Assessment переведены в overlay panels; Knowledge Check и Terminal Practice оставлены в центре; добавлен toast; Repository Map получает класс `map-hidden` и скрывает содержимое; Retry показывается при недостаточном результате; выполнен `npm run build`; production `dist` проверен браузером: панели открываются/закрываются, map hide меняет кнопку на `Show Map`, после неверного Knowledge Check отображается `Retry` и сообщение `Current success is 0%. Scores at 50% or below block progression. Use Retry.`, при 100% Chapter 2 открывается, console errors/warnings отсутствуют, bodyOverflowX=0.
+
+Дата и время — 2026-07-23 17:39:25 +10:00

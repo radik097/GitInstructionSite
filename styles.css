@@ -47,12 +47,12 @@ button {
 .app-shell {
   min-height: 100vh;
   display: grid;
-  grid-template-columns: 282px minmax(720px, 1fr) 340px;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: 58px 1fr 42px;
   grid-template-areas:
-    "topbar topbar topbar"
-    "sidebar workspace practice"
-    "status status status";
+    "topbar"
+    "workspace"
+    "status";
 }
 
 .topbar {
@@ -126,11 +126,47 @@ button {
 }
 
 .chapter-sidebar {
-  grid-area: sidebar;
-  min-width: 0;
+  position: fixed;
+  left: 0;
+  top: 58px;
+  bottom: 42px;
+  z-index: 15;
+  width: min(340px, calc(100vw - 24px));
   border-right: 1px solid var(--line);
   background: var(--surface);
   overflow: auto;
+  box-shadow: 18px 0 44px rgba(15, 23, 42, 0.14);
+  transform: translateX(-105%);
+  transition: transform 0.18s ease;
+}
+
+.chapter-sidebar.open {
+  transform: translateX(0);
+}
+
+.panel-head {
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.panel-head h2 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.panel-close {
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  color: #334155;
+  font-weight: 800;
 }
 
 .progress-card {
@@ -262,8 +298,10 @@ button {
 
 .lesson-workspace {
   grid-area: workspace;
+  width: min(980px, calc(100vw - 48px));
   min-width: 0;
-  padding: 22px 26px 28px;
+  justify-self: center;
+  padding: 26px 0 34px;
   overflow: auto;
 }
 
@@ -273,6 +311,22 @@ button {
   gap: 18px;
   align-items: start;
   margin-bottom: 18px;
+}
+
+.focus-action-shell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  padding: 14px 16px;
+  box-shadow: 0 6px 22px rgba(21, 33, 54, 0.04);
+}
+
+.focus-action-shell .result-text {
+  margin: 0;
 }
 
 .eyebrow {
@@ -364,6 +418,19 @@ h1 {
 .flow-scroll {
   overflow-x: auto;
   padding: 18px;
+}
+
+.flow-shell.map-hidden .flow-scroll {
+  display: none;
+}
+
+.flow-shell.map-hidden .flow-head {
+  border-bottom: 0;
+}
+
+.flow-shell.map-hidden .flow-head span::after {
+  content: " (hidden)";
+  color: #8b97a8;
 }
 
 .flow-grid {
@@ -603,6 +670,7 @@ h1 {
 }
 
 .steps-shell,
+.quiz-box,
 .terminal-shell {
   margin-top: 16px;
 }
@@ -704,7 +772,12 @@ h1 {
 }
 
 .practice-panel {
-  grid-area: practice;
+  position: fixed;
+  right: 0;
+  top: 58px;
+  bottom: 42px;
+  z-index: 15;
+  width: min(380px, calc(100vw - 24px));
   display: grid;
   align-content: start;
   gap: 14px;
@@ -712,6 +785,13 @@ h1 {
   background: var(--surface);
   padding: 16px;
   overflow: auto;
+  box-shadow: -18px 0 44px rgba(15, 23, 42, 0.14);
+  transform: translateX(105%);
+  transition: transform 0.18s ease;
+}
+
+.practice-panel.open {
+  transform: translateX(0);
 }
 
 .practice-box,
@@ -947,6 +1027,43 @@ code {
   font-size: 12px;
 }
 
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 58px;
+  z-index: 30;
+  max-width: min(560px, calc(100vw - 32px));
+  transform: translate(-50%, 18px);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: #243247;
+  padding: 12px 16px;
+  box-shadow: 0 18px 44px rgba(15, 23, 42, 0.18);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.16s ease, transform 0.16s ease;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.toast.open {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.toast.success {
+  border-color: #b8dec7;
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.toast.warning {
+  border-color: #f2c683;
+  background: var(--amber-soft);
+  color: #9a5c00;
+}
+
 .statusbar span {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1022,19 +1139,12 @@ code {
 
 @media (max-width: 1240px) {
   .app-shell {
-    grid-template-columns: 260px minmax(0, 1fr);
-    grid-template-rows: 58px minmax(620px, auto) auto 42px;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 58px minmax(620px, auto) 42px;
     grid-template-areas:
-      "topbar topbar"
-      "sidebar workspace"
-      "sidebar practice"
-      "status status";
-  }
-
-  .practice-panel {
-    grid-template-columns: repeat(3, minmax(220px, 1fr));
-    border-left: 0;
-    border-top: 1px solid var(--line);
+      "topbar"
+      "workspace"
+      "status";
   }
 }
 
@@ -1066,18 +1176,13 @@ code {
     flex: 1 0 100%;
   }
 
-  .chapter-sidebar {
-    max-height: none;
-    border-right: 0;
-    border-bottom: 1px solid var(--line);
-  }
-
   .chapter-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .lesson-workspace {
-    padding: 18px 14px;
+    width: min(100% - 28px, 980px);
+    padding: 18px 0;
   }
 
   .chapter-summary {
@@ -1090,11 +1195,6 @@ code {
 
   .flow-grid {
     min-width: 700px;
-  }
-
-  .practice-panel {
-    display: grid;
-    grid-template-columns: 1fr;
   }
 
   .statusbar {
