@@ -4,12 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Git Static Lab</title>
-    <link rel="stylesheet" href="./styles.css?v=20260723-layout6" />
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./styles.css?v=20260723-chapters1" />
   </head>
   <body>
     <div class="app-shell">
       <header class="topbar">
-        <a class="brand" href="#diagram" aria-label="Git Static Lab">
+        <a class="brand" href="#flow" aria-label="Git Static Lab">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M6 3v7m0 0v11m0-11 12 7m0-7v7m0 0v4" />
             <circle cx="6" cy="3" r="2" />
@@ -19,170 +20,114 @@
           </svg>
           <span>Git Static Lab</span>
         </a>
-        <div class="lesson-title" id="lessonTitle">Урок 5: ветки, коммиты, push и pull</div>
+        <div class="chapter-path" id="chapterPath">Глава 1 / Основы Git</div>
         <nav class="top-actions" aria-label="Быстрые действия">
-          <button class="icon-button" id="resetBtn" title="Сбросить лабораторию" aria-label="Сбросить лабораторию">
+          <button class="icon-button" id="resetBtn" title="Сбросить прогресс" aria-label="Сбросить прогресс">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v6h6" /></svg>
-            <span>Reset Lab</span>
+            <span>Reset</span>
           </button>
           <button class="icon-button" id="hintBtn" title="Показать подсказку" aria-label="Показать подсказку">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.7.6 1 1.2 1 2.3h6c0-1.1.3-1.7 1-2.3A7 7 0 0 0 12 2Z" /></svg>
             <span>Hint</span>
           </button>
-          <button class="icon-button" id="docsBtn" title="Открыть шпаргалку" aria-label="Открыть шпаргалку">
+          <button class="icon-button" id="docsBtn" title="Шпаргалка" aria-label="Шпаргалка">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15Z" /></svg>
             <span>Docs</span>
           </button>
         </nav>
       </header>
 
-      <aside class="sidebar" aria-label="Уроки">
-        <div class="sidebar-head">
-          <span>LESSONS</span>
-          <strong id="lessonCounter">5 / 12</strong>
+      <aside class="chapter-sidebar" aria-label="Главы курса">
+        <div class="progress-card">
+          <span>Course Progress</span>
+          <strong id="courseProgressText">0 / 6</strong>
+          <div class="progress-track"><i id="courseProgressBar"></i></div>
         </div>
-        <ol class="lesson-list" id="lessonList"></ol>
-        <div class="sidebar-links">
-          <button data-panel="cheatsheet"><span>&lt;/&gt;</span>Cheat Sheet</button>
-          <button data-panel="glossary"><span>?</span>Glossary</button>
-          <button data-panel="playground"><span>$</span>Playground</button>
-        </div>
+        <nav class="chapter-list" id="chapterList"></nav>
       </aside>
 
-      <main class="workspace">
-        <div class="tabs" role="tablist" aria-label="Разделы лаборатории">
-          <button class="tab active" data-view="diagram" role="tab" aria-selected="true">Diagram</button>
-          <button class="tab" data-view="terminal" role="tab" aria-selected="false">Terminal</button>
-          <button class="tab" data-view="commands" role="tab" aria-selected="false">Commands</button>
-          <button class="tab" data-view="changes" role="tab" aria-selected="false">File Changes</button>
-        </div>
-
-        <section class="view active" id="diagram" aria-label="Интерактивная схема Git">
-          <div class="diagram-header">
-            <div class="local-label">Local</div>
-            <div class="remote-label">Remote</div>
+      <main class="lesson-workspace">
+        <section class="chapter-summary" aria-labelledby="chapterTitle">
+          <div>
+            <span class="eyebrow" id="chapterEyebrow">Chapter 1</span>
+            <h1 id="chapterTitle">Основы Git</h1>
+            <p id="chapterIntro"></p>
           </div>
-          <div class="diagram-grid">
-            <section class="zone local-zone" aria-label="Локальная часть">
-              <div class="lane workspace-lane" data-lane="workspace">
-                <h2>Workspace</h2>
-                <p>Your working files</p>
-                <div class="file-list" id="workspaceFiles"></div>
-              </div>
-              <div class="lane staging-lane" data-lane="staging">
-                <h2>Staging</h2>
-                <p>Index area</p>
-                <div class="file-list" id="stagingFiles"></div>
-              </div>
-              <div class="lane repo-lane" data-lane="local">
-                <h2>Local Repo</h2>
-                <p>.git directory</p>
-                <div class="branch-card" id="localBranch"></div>
-              </div>
-              <button class="flow-button flow-add" data-command="add">Add<br /><kbd>git add</kbd></button>
-              <button class="flow-button flow-commit" data-command="commit">Commit<br /><kbd>git commit</kbd></button>
-              <button class="flow-button flow-merge" data-command="merge">Merge<br /><kbd>git merge</kbd></button>
-            </section>
-
-            <section class="remote-zone" aria-label="Удаленный репозиторий">
-              <h2>Remote Repository</h2>
-              <p>origin</p>
-              <div class="branch-card remote-main" id="remoteMain"></div>
-              <div class="branch-card remote-feature" id="remoteFeature"></div>
-            </section>
-
-            <div class="remote-actions" aria-label="Операции с удаленным репозиторием">
-              <button class="remote-action push" data-command="push">
-                <span>Push</span><kbd>git push</kbd>
-              </button>
-              <button class="remote-action pull" data-command="pull">
-                <span>Pull</span><kbd>git pull</kbd>
-              </button>
-              <button class="remote-action fetch" data-command="fetch">
-                <span>Fetch</span><kbd>git fetch</kbd>
-              </button>
-            </div>
-          </div>
-          <div class="legend" aria-label="Легенда">
-            <span><i class="green"></i>Working Change</span>
-            <span><i class="amber"></i>Merge / Integration</span>
-            <span><i class="blue"></i>Remote Operation</span>
-            <span><i class="red"></i>Conflict</span>
-          </div>
-          <output class="explanation" id="explanation">
-            Нажмите команду на схеме или справа. Сайт покажет, куда двигаются файлы и какие ветки меняются локально и на remote.
-          </output>
+          <div class="chapter-meter" id="chapterMeter"></div>
         </section>
 
-        <section class="view terminal-view" id="terminal" aria-label="Терминал">
-          <div class="terminal" id="terminalOutput"></div>
+        <section class="flow-shell" id="flow" aria-label="Схема движения изменений">
+          <div class="flow-head">
+            <h2>Карта репозитория</h2>
+            <span id="activeFlowLabel">Workspace -> Staging -> Local Repo -> Remote</span>
+          </div>
+          <div class="flow-scroll">
+            <div class="flow-grid" id="flowGrid"></div>
+          </div>
         </section>
 
-        <section class="view command-view" id="commands" aria-label="Команды Git">
-          <div class="command-grid" id="commandGrid"></div>
+        <section class="steps-shell" aria-label="Шаги главы">
+          <div class="section-head">
+            <h2>Шаги главы</h2>
+            <span id="stepStatus">0 выполнено</span>
+          </div>
+          <div class="step-list" id="stepList"></div>
         </section>
 
-        <section class="view changes-view" id="changes" aria-label="Изменения файлов">
-          <table>
-            <thead>
-              <tr><th>Файл</th><th>Workspace</th><th>Staging</th><th>Local repo</th><th>Remote</th></tr>
-            </thead>
-            <tbody id="changesTable"></tbody>
-          </table>
+        <section class="terminal-shell" aria-label="Журнал команд">
+          <div class="section-head">
+            <h2>Терминал</h2>
+            <button class="text-button" id="clearLogBtn">Очистить журнал</button>
+          </div>
+          <pre class="terminal" id="terminalOutput"></pre>
         </section>
       </main>
 
-      <aside class="practice" aria-label="Практика">
-        <h2>Practice</h2>
-        <div class="segmented" role="tablist">
-          <button class="active" data-practice-tab="scenario">Scenario</button>
-          <button data-practice-tab="controls">Controls</button>
-        </div>
-        <section class="scenario-card active" id="scenarioPanel">
-          <h3 id="scenarioTitle">Scenario: Feature Login</h3>
-          <p id="scenarioText">Вы создали ветку feature/login и добавили форму входа. Синхронизируйте ее с origin и затем влейте в main.</p>
-          <ol id="taskList"></ol>
-          <button class="primary-button" id="checkScenario">Check Answer</button>
-        </section>
-        <section class="scenario-card" id="controlsPanel">
-          <h3>Команды</h3>
-          <div class="button-stack" id="practiceCommands"></div>
+      <aside class="practice-panel" aria-label="Практика">
+        <section class="practice-box">
+          <div class="section-head">
+            <h2>Практика</h2>
+            <span id="practiceState">Ready</span>
+          </div>
+          <p id="practiceText"></p>
+          <div class="command-stack" id="practiceCommands"></div>
+          <button class="primary-button" id="checkChapterBtn">Проверить главу</button>
+          <p class="result-text" id="chapterResult" aria-live="polite"></p>
         </section>
 
-        <section class="quiz-card">
-          <div class="quiz-head">
-            <h3>Quiz</h3>
-            <span id="quizMeta">Question 1 of 8</span>
+        <section class="quiz-box">
+          <div class="section-head">
+            <h2>Тест</h2>
+            <span id="quizMeta">1 / 1</span>
           </div>
-          <div class="progress"><span id="quizProgress"></span></div>
+          <div class="progress-track"><i id="quizProgressBar"></i></div>
           <p class="question" id="questionText"></p>
           <div class="answers" id="answers"></div>
-          <button class="primary-button" id="submitAnswer">Submit Answer</button>
-          <p class="answer-result" id="answerResult" aria-live="polite"></p>
+          <button class="primary-button" id="submitAnswer">Ответить</button>
+          <p class="result-text" id="answerResult" aria-live="polite"></p>
         </section>
 
-        <section class="progress-card">
-          <div><strong>Quiz Progress</strong><span id="scoreText">0 / 8</span></div>
-          <div class="dots" id="quizDots"></div>
+        <section class="notes-box">
+          <h2>Что важно</h2>
+          <ul id="chapterNotes"></ul>
         </section>
       </aside>
 
       <footer class="statusbar">
-        <span><i class="status-dot"></i>Lab Status: <strong id="labStatus">Ready</strong></span>
+        <span><i class="status-dot"></i>Status: <strong id="labStatus">Ready</strong></span>
         <span>Repository: <strong>git-static-lab</strong></span>
-        <span>Current Branch: <strong id="currentBranch">feature/login</strong></span>
-        <span>Auto-saved <i class="saved-dot"></i></span>
+        <span>Branch: <strong id="branchName">main</strong></span>
       </footer>
     </div>
 
     <div class="drawer" id="drawer" aria-hidden="true">
       <div class="drawer-panel">
         <button class="close-drawer" id="closeDrawer" aria-label="Закрыть">x</button>
-        <h2 id="drawerTitle">Cheat Sheet</h2>
+        <h2 id="drawerTitle">Docs</h2>
         <div id="drawerBody"></div>
       </div>
     </div>
 
-    <script type="module" src="./app.js?v=20260723-layout6"></script>
+    <script type="module" src="./app.js?v=20260723-chapters1"></script>
   </body>
 </html>
